@@ -1,17 +1,17 @@
 package com.example.svc;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import models.User;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import models.User;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_DATA = "com.example.svc.EXTRA_DATA";
@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toast.makeText(this, "hello ", Toast.LENGTH_LONG);
     }
 
     public void login(View v){
