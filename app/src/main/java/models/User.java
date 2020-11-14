@@ -1,7 +1,6 @@
 package models;
 
 import android.content.Context;
-import android.widget.Toast;
 
 public class User {
     private static final String email = "safadimiras@gmail.com";
@@ -12,6 +11,16 @@ public class User {
 
         //check credentials and send response
         if(email.equals(User.email) && password.equals(User.password))
+            return true;
+        return false;
+    }
+    public static boolean signUp(String email, String password, Context context){
+        //do input validation and open next screen
+
+        //check credentials and send response
+        if(email.equals(User.email))
+        return false;
+        if (password.equals(User.password))
             return true;
         return false;
     }

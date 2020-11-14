@@ -32,11 +32,16 @@ public class MainActivity extends AppCompatActivity {
         }else{
             new AlertDialog.Builder(this)
                     .setTitle("Wrong Credentials, Sorry :(")
-                    .setMessage("Email or password is incorrect!")
+                    .setMessage("Email or passwords are not similar!")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
 
         }
     }
+    public void link(View v){
+        Intent intent = new Intent(this,SignUp.class);
+        startActivity(intent);
+    }
+
 }
