@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp">
+    tools:context=".AddVC">
 
     <TextView
-        android:id="@+id/ctextView7"
+        android:id="@+id/atextView7"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:gravity="center"
-        android:text="Create New Account"
+        android:text="Add Visit Card"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.028" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/emailTR"
+        android:id="@+id/AemailTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="296dp"
@@ -35,62 +35,82 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/firstNameTR"
+        android:id="@+id/AfirstNameTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
-        android:layout_marginBottom="348dp"
+        android:layout_marginBottom="400dp"
         android:hint="First Name"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
 
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/lastNameTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
-        android:layout_marginBottom="400dp"
+        android:layout_marginBottom="348dp"
         android:hint="Last Name"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
 
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/passwordTR"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/AjobT"
         android:layout_width="316dp"
         android:layout_height="52dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="200dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
+        android:layout_marginBottom="192dp"
+        android:hint="Job"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailTR"
-        app:layout_constraintVertical_bias="0.022" />
 
-    <EditText
-        android:id="@+id/cPasswordTR"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/AnumberTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="30dp"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
+        android:layout_marginBottom="244dp"
+        android:hint="Phone Number"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailTR"
-        app:layout_constraintVertical_bias="0.222" />
+
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/AcompanyTR"
+        android:layout_width="316dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="140dp"
+        android:hint="Company"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/AaddressTR"
+        android:layout_width="316dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="88dp"
+        android:hint="Address"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/signUpBtn"
@@ -98,12 +118,14 @@
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="100dp"
-        android:onClick="signUp"
-        android:text="Sign Up"
+        android:onClick="addVc"
+        android:text="Confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailTR"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/AemailTR"
+        app:layout_constraintVertical_bias="1.6" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

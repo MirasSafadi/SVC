@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SVC">
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".AddVC"
+            android:label="Add Visit Card"></activity>
+        <activity android:name=".SignUp"
+            android:label="Sign Up"/>
         <activity
             android:name=".Home"
             android:parentActivityName=".MainActivity">
