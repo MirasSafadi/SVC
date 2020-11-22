@@ -11,15 +11,13 @@ import security.auth;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class UserDAO {
 
-    private static final String email = "safadimiras@gmail.com";
-    private static final String password = auth.hashPassword("123456");
-
-
     public static boolean login(UserDTO user,SVCDB db){
         //do input validation!!
         //get the user from the database
+        System.out.println(user.getPassword());
         UserDTO dbUser = db.getUser(user.getEmail());
         System.out.println(dbUser);
+        System.out.println(dbUser.getPassword());
         //if the user doesn't exist in db return false
         if(dbUser == null)
             return false;

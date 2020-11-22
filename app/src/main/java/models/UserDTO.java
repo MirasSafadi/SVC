@@ -18,9 +18,9 @@ public class UserDTO {
     private String password;
     private String full_name;
 
-    public UserDTO(String email,String password, String full_name){
+    public UserDTO(String email,String password, String full_name,boolean hashPassword){
         this.setEmail(email);
-        this.setPassword(password);
+        this.setPassword(password,hashPassword);
         this.setFull_name(full_name);
     }
     public String getEmail(){
@@ -42,8 +42,11 @@ public class UserDTO {
     }
 
 
-    public void setPassword(String password) {
-        this.password = auth.hashPassword(password);
+    public void setPassword(String password,boolean hashPassword) {
+        if(hashPassword)
+            this.password = auth.hashPassword(password);
+        else
+            this.password = password;
     }
 
     public void setFull_name(String full_name){

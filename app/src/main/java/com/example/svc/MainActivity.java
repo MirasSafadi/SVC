@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(this, "hello ", Toast.LENGTH_LONG);
-        db = SVCDB.getInstance(this);
+        db = new SVCDB(this);
 //        db.removeUser("ranihassan@gmail.com");
     }
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public void login(View v){
         String email = ((TextInputEditText) findViewById(R.id.emailTF)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordTF)).getText().toString();
-        if(UserDAO.login(new UserDTO(email,password,null),db)){
+        if(UserDAO.login(new UserDTO(email,password,null,true),db)){
             Intent intent = new Intent(this,Home.class);
             intent.putExtra(EXTRA_DATA,"Welcome to SVC!");
             startActivity(intent);

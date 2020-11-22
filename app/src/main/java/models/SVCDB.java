@@ -39,17 +39,14 @@ public class SVCDB extends SQLiteOpenHelper {
 
     private HashMap hp;
     //only need one instance of the database, make the class a singleton class.
-    public static SVCDB instance = null;
 
-    private SVCDB(Context context){
+
+    public SVCDB(Context context){
+
         super(context, DATABASE_NAME , null, 1);
     }
 
-    public static SVCDB getInstance(Context context){
-        if(instance == null)
-            instance = new SVCDB(context);
-        return instance;
-    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -94,12 +91,11 @@ public class SVCDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM user WHERE email = ?";
         Cursor cursor = db.rawQuery(sql, new String[] {email});
-
         if(cursor.moveToFirst()){
             String userEmail = cursor.getString(cursor.getColumnIndex(USER_COLUMN_EMAIL));
             String password = cursor.getString(cursor.getColumnIndex(USER_COLUMN_PASSWORD));
             String full_name = cursor.getString(cursor.getColumnIndex(USER_COLUMN_FULL_NAME));
-            return new UserDTO(userEmail,password,full_name);
+            return new UserDTO(userEmail,password,full_name,false);
         }
         return null;
     }
@@ -113,7 +109,6 @@ public class SVCDB extends SQLiteOpenHelper {
         contentValues.put(USER_COLUMN_FULL_NAME, user.getFull_name());
 
         long insert_result = db.insert(USER_TABLE_NAME, null, contentValues);
-        System.out.println(insert_result);
         return insert_result != -1;
     }
 

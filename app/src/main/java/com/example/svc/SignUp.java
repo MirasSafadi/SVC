@@ -24,7 +24,7 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        db = SVCDB.getInstance(this);
+        db = new SVCDB(this);
     }
 
     public void signUp(View v){
@@ -44,7 +44,7 @@ public class SignUp extends AppCompatActivity {
         }
 
 
-        if(UserDAO.signUp(new UserDTO(email,password1,full_name),db)){
+        if(UserDAO.signUp(new UserDTO(email,password1,full_name,true),db)){
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }else{
