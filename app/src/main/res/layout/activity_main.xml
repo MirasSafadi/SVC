@@ -11,7 +11,7 @@
         android:layout_width="70dp"
         android:layout_height="40dp"
         android:gravity="center"
-        android:text="Login"
+        android:text="@string/login"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,7 +27,7 @@
         android:layout_height="52dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="452dp"
-        android:hint="Email"
+        android:hint="@string/email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -42,14 +42,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="408dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTF"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/loginBtn"
@@ -58,7 +59,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="328dp"
         android:onClick="login"
-        android:text="Login"
+        android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.46"
@@ -67,13 +68,13 @@
         app:layout_constraintVertical_bias="0.105" />
 
     <Button
-        android:id="@+id/signBtn"
+        android:id="@+id/signupBtn"
         android:layout_width="309dp"
         android:layout_height="56dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="100dp"
         android:onClick="link"
-        android:text="sign"
+        android:text="@string/signup"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.46"
