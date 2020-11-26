@@ -1,6 +1,5 @@
 package models;
 
-import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -28,6 +27,8 @@ public class UserDAO {
     }
     public static boolean signUp(UserDTO user,SVCDB db){
         //do input validation!!!
+
         return db.addUser(user);
     }
 }
+

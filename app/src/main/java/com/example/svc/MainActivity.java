@@ -35,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
         String email = ((TextInputEditText) findViewById(R.id.emailTF)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwordTF)).getText().toString();
         if(UserDAO.login(new UserDTO(email,password,null,true),db)){
-            Intent intent = new Intent(this,Home.class);
-            intent.putExtra(EXTRA_DATA,"Welcome to SVC!");
+          //  Intent intent = new Intent(this,Home.class);
+          //  intent.putExtra(EXTRA_DATA,"Welcome to SVC!");
+           // startActivity(intent);
+            Intent intent = new Intent(this,AddVC.class);
             startActivity(intent);
         }else{
             new AlertDialog.Builder(this)

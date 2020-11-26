@@ -3,9 +3,8 @@ package models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
-import android.database.DatabaseUtils;
-import android.database.sqlite.*;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -99,7 +98,19 @@ public class SVCDB extends SQLiteOpenHelper {
         }
         return null;
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public VisitCardDTO getVC(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM visit_card WHERE id = ?";
+        Cursor cursor = db.rawQuery(sql, new String[] {Integer.toString(id)});
+        if(cursor.moveToFirst()){
+            String VCid = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ID));
+            String owner = cursor.getString(cursor.getColumnIndex(VC_COLUMN_OWNER));
+            String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
+            return new VisitCardDTO(Integer.parseInt(VCid),owner,full_name,null,  null,  null, null,null);
+        }
+        return null;
+    }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean addUser(UserDTO user){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -109,6 +120,23 @@ public class SVCDB extends SQLiteOpenHelper {
         contentValues.put(USER_COLUMN_FULL_NAME, user.getFull_name());
 
         long insert_result = db.insert(USER_TABLE_NAME, null, contentValues);
+        return insert_result != -1;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean addVC(VisitCardDTO vc){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(VC_COLUMN_ID, vc.getId());
+        contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
+        contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
+        contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
+        contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getJob());
+        contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
+        contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
+        contentValues.put(VC_COLUMN_MOBILE, vc.getPhone_number());
+
+        long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);
         return insert_result != -1;
     }
 
