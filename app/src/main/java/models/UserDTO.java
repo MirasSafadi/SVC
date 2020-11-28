@@ -2,15 +2,9 @@ package models;
 
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import security.auth;
+import security.Auth;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class UserDTO {
@@ -44,7 +38,7 @@ public class UserDTO {
 
     public void setPassword(String password,boolean hashPassword) {
         if(hashPassword)
-            this.password = auth.hashPassword(password);
+            this.password = Auth.hashPassword(password);
         else
             this.password = password;
     }
