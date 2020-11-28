@@ -35,24 +35,37 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AfirstNameTR"
+        android:id="@+id/AIdTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
-        android:layout_marginBottom="400dp"
-        android:hint="First Name"
+        android:layout_marginBottom="452dp"
+        android:hint="ID"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.484"
 
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/lastNameTR"
+        android:id="@+id/ownerTR"
+        android:layout_width="316dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="400dp"
+        android:hint="Owner"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/fullNameTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="348dp"
-        android:hint="Last Name"
+        android:hint="Full Name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +126,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/signUpBtn"
+        android:id="@+id/AddvcBtn"
         android:layout_width="309dp"
         android:layout_height="56dp"
         android:layout_marginTop="8dp"

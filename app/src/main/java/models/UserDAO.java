@@ -24,6 +24,8 @@ public class UserDAO {
     }
     public static boolean signUp(UserDTO user,SVCDB db){
         //do input validation!!!
+
         return db.addUser(user);
     }
 }
+
