@@ -37,12 +37,10 @@ public class SVCDB extends SQLiteOpenHelper {
     public static final String VC_COLUMN_WEBSITE = "website";
 
 
-    private HashMap hp;
-    //only need one instance of the database, make the class a singleton class.
+
 
 
     public SVCDB(Context context){
-
         super(context, DATABASE_NAME , null, 1);
     }
 
@@ -75,7 +73,7 @@ public class SVCDB extends SQLiteOpenHelper {
                         "    ON UPDATE CASCADE);"
         );
         //for testing only: add dummy user to database
-        db.execSQL("INSERT INTO `user` (`email`, `full_name`, `password`) VALUES ('safadimiras@gmail.com', 'Miras Safadi', '123456');");
+        db.execSQL("INSERT INTO `user` (`email`, `full_name`, `password`) VALUES ('safadimiras@gmail.com', 'Miras Safadi', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');");
     }
 
     @Override
