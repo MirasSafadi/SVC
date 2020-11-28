@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/welcomeTV"
-        android:layout_width="375dp"
-        android:layout_height="94dp"
+        android:layout_width="376dp"
+        android:layout_height="47dp"
         android:gravity="center"
         android:text="some text for testing layout"
-        android:textSize="36sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,4 +20,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.029" />
+
+    <TableLayout
+        android:id="@+id/visitCardsTable"
+        android:layout_width="413dp"
+        android:layout_height="498dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTV"
+        app:layout_constraintVertical_bias="0.0">
+
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

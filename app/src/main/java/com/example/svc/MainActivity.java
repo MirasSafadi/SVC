@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import models.SVCDB;
 import models.UserDAO;
 import models.UserDTO;
+import models.VisitCardDTO;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class MainActivity extends AppCompatActivity {
@@ -28,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toast.makeText(this, "hello ", Toast.LENGTH_LONG);
         db = new SVCDB(this);
-//        db.removeUser("safadimiras@gmail.com");
-        db.addUser((new UserDTO("safadimiras@gmail.com","123456","Miras Safadi", true)));
     }
 
 
@@ -66,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
     //takes the user to the registration page
     public void link(View v){
         Intent intent = new Intent(this,SignUp.class);
+        startActivity(intent);
+    }
+    public void addVC(View v){
+        Intent intent = new Intent(this,AddVC.class);
         startActivity(intent);
     }
 

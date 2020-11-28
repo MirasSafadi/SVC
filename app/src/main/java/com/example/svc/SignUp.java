@@ -36,6 +36,8 @@ public class SignUp extends AppCompatActivity {
 
         //validate input
         //----------------------------------------------------------------------
+        //need to test regex independently first
+        /*
         if(email.isEmpty() || full_name.isEmpty() || password1.isEmpty() || password2.isEmpty()){
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
@@ -72,7 +74,7 @@ public class SignUp extends AppCompatActivity {
                     .show();
             return;
         }
-        //----------------------------------------------------------------------
+        //----------------------------------------------------------------------*/
 
 
         if(UserDAO.signUp(new UserDTO(email,password1,full_name,true),db)){
