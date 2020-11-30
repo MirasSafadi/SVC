@@ -41,8 +41,7 @@ public class AddVC extends AppCompatActivity {
 
 
         //check if fields are not empty and validate them with regex if so...
-        //need to test regex independently first
-        /*boolean isValid = true;
+        boolean isValid = true;
         if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
             isValid = false;
         if(!mobile.isEmpty() && !InputValidators.validate(InputValidators.MOBILE,mobile))
@@ -54,7 +53,7 @@ public class AddVC extends AppCompatActivity {
         if(!fax.isEmpty() && !InputValidators.validate(InputValidators.FAX,fax))
             isValid = false;
         if(!website.isEmpty() && !InputValidators.validate(InputValidators.WEBSITE,website))
-            isValid = false;*/
+            isValid = false;
 
 //        if(VisitCardDAO.addVC(new VisitCardDTO(Integer.parseInt(id), null, null, null,null,null,null,null), db)){
 //            Intent intent = new Intent(this,Home.class);
