@@ -89,7 +89,11 @@ public class SVCDB extends SQLiteOpenHelper {
             String userEmail = cursor.getString(cursor.getColumnIndex(USER_COLUMN_EMAIL));
             String password = cursor.getString(cursor.getColumnIndex(USER_COLUMN_PASSWORD));
             String full_name = cursor.getString(cursor.getColumnIndex(USER_COLUMN_FULL_NAME));
-            return new UserDTO(userEmail,password,full_name,false);
+            return new UserDTO.Builder()
+                    .setEmail(userEmail)
+                    .setPassword(password,false)
+                    .setFull_name(full_name)
+                    .build();
         }
         return null;
     }
@@ -119,10 +123,31 @@ public class SVCDB extends SQLiteOpenHelper {
         String sql = "SELECT * FROM visit_card WHERE id = ?";
         Cursor cursor = db.rawQuery(sql, new String[] { Integer.toString(id) });
         if(cursor.moveToFirst()){
-            String VCid = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ID));
+            int vc_id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
             String owner = cursor.getString(cursor.getColumnIndex(VC_COLUMN_OWNER));
+            String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
             String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
-            return new VisitCardDTO(Integer.parseInt(VCid),owner,full_name,null,  null,  null, null,null);
+            String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));
+            String company = cursor.getString(cursor.getColumnIndex(VC_COLUMN_COMPANY));
+            String address = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ADDRESS));
+            String telephone = cursor.getString(cursor.getColumnIndex(VC_COLUMN_TELEPHONE));
+            String fax = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FAX));
+            String mobile = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MOBILE));
+            String website = cursor.getString(cursor.getColumnIndex(VC_COLUMN_WEBSITE));
+
+            return new VisitCardDTO.Builder().
+                    setId(vc_id).
+                    setOwner(owner).
+                    setEmail(email).
+                    setFull_name(full_name).
+                    setPosition_title(position_title).
+                    setCompany(company).
+                    setAddress(address).
+                    setTelephone(telephone).
+                    setFax(fax).
+                    setMobile(mobile).
+                    setWebsite(website).
+                    build();
         }
         return null;
     }
@@ -134,10 +159,10 @@ public class SVCDB extends SQLiteOpenHelper {
         contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
         contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
         contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
-        contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getJob());
+        contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getPosition_title());
         contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
         contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
-        contentValues.put(VC_COLUMN_MOBILE, vc.getPhone_number());
+        contentValues.put(VC_COLUMN_MOBILE, vc.getTelephone());
 
         long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);
         return insert_result != -1;
@@ -152,19 +177,31 @@ public class SVCDB extends SQLiteOpenHelper {
 
         while(cursor.isAfterLast() == false){
             int id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
-            String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
             String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
+            String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
             String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));
             String company = cursor.getString(cursor.getColumnIndex(VC_COLUMN_COMPANY));
-            String mobile = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MOBILE));
             String address = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ADDRESS));
-            //wait for rani to add these fields in VisitCardDTO and then add them to the constructor
             String telephone = cursor.getString(cursor.getColumnIndex(VC_COLUMN_TELEPHONE));
             String fax = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FAX));
+            String mobile = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MOBILE));
             String website = cursor.getString(cursor.getColumnIndex(VC_COLUMN_WEBSITE));
 
 
-            visitCards.add(new VisitCardDTO(id, userEmail, full_name, email, mobile, position_title,company,address));
+            visitCards.add(new VisitCardDTO.Builder().
+                                            setId(id).
+                                            setOwner(userEmail).
+                                            setEmail(email).
+                                            setFull_name(full_name).
+                                            setPosition_title(position_title).
+                                            setCompany(company).
+                                            setAddress(address).
+                                            setTelephone(telephone).
+                                            setFax(fax).
+                                            setMobile(mobile).
+                                            setWebsite(website).
+                                            build()
+            );
             cursor.moveToNext();
         }
         return visitCards;

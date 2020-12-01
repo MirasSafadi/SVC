@@ -3,78 +3,121 @@ package models;
 public class VisitCardDTO {
     private int id;
     private String owner;
-    private String full_name;
     private String email;
-    private String phone_number;
-    private String job;
+    private String full_name;
+    private String position_title;
     private String company;
     private String address;
+    private String telephone;
+    private String fax;
+    private String mobile;
+    private String website;
 
-    public VisitCardDTO(int id,String owner, String full_name,String email,String phone_number,String job,String company,String address){
-        this.setId(id);
-        this.setOwner(owner);
-        this.setFull_name(full_name);
-        this.setEmail(email);
-        this.setPhone_number(phone_number);
-        this.setJob(job);
-        this.setCompany(company);
-        this.setAddress(address);
+    private VisitCardDTO(Builder builder){
+        this.id = builder.id;
+        this.owner = builder.owner;
+        this.email = builder.email;
+        this.full_name = builder.full_name;
+        this.position_title = builder.full_name;
+        this.company = builder.company;
+        this.address = builder.address;
+        this.telephone = builder.telephone;
+        this.fax = builder.fax;
+        this.mobile = builder.mobile;
+        this.website = builder.website;
     }
 
+    public static class Builder{
+        private int id;
+        private String owner;
+        private String email;
+        private String full_name;
+        private String position_title;
+        private String company;
+        private String address;
+        private String telephone;
+        private String fax;
+        private String mobile;
+        private String website;
 
 
+        public Builder setId(int id) {
+            this.id = id;
+            return this;
+        }
+        public Builder setOwner(String owner) {
+            this.owner = owner;
+            return this;
+        }
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+        public Builder setFull_name(String full_name) {
+            this.full_name = full_name;
+            return this;
+        }
+        public Builder setPosition_title(String position_title) {
+            this.position_title = position_title;
+            return this;
+        }
+        public Builder setCompany(String company) {
+            this.company = company;
+            return this;
+        }
+
+        public Builder setAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder setTelephone(String telephone) {
+            this.telephone = telephone;
+            return this;
+        }
+        public Builder setFax(String fax) {
+            this.fax = fax;
+            return this;
+        }
+        public Builder setMobile(String mobile) {
+            this.mobile = mobile;
+            return this;
+        }
+        public Builder setWebsite(String website) {
+            this.website = website;
+            return this;
+        }
+        //===========================================
+        public VisitCardDTO build(){
+            return new VisitCardDTO(this);
+        }
+    }
+    //=======================================================================================
     public int getId() {
         return id;
     }
-
     public String getOwner() {
         return owner;
     }
+    public String getEmail() { return email; }
     public String getFull_name() {
         return full_name;
     }
-    public String getEmail() {
-        return email;
+    public String getPosition_title() { return position_title; }
+    public String getCompany() { return company; }
+    public String getAddress() { return address; }
+    public String getTelephone() {
+        return telephone;
     }
-    public String getPhone_number() {
-        return phone_number;
-    }
-    public String getJob() {
-        return job;
-    }
-    public String getCompany() {
-        return company;
-    }
-    public String getAddress() {
-        return address;
-    }
+    public String getFax() { return fax; }
+    public String getMobile() { return mobile; }
+    public String getWebsite() { return website; }
+
 
     //=======================================================================================
 
-    public void setId(int id) {
-        this.id = id;
-    }
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
-    }
-    public void setJob(String job) {
-        this.job = job;
-    }
-    public void setCompany(String company) {
-        this.company = company;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
+
+
     @Override
     public String toString() {
         return String.format("%s %s %s %s",this.id,this.owner,this.email,this.full_name);

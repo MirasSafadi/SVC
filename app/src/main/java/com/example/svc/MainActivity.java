@@ -47,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
         }
         //-----------------------------------------------
         UserDTO user;
-        if((user = UserDAO.login(new UserDTO(email,password,null,true),db)) != null){
+        if((user = UserDAO.login(new UserDTO.Builder().
+                                            setEmail(email).
+                                            setPassword(password,true).
+                                            build(),db)) != null){
             Intent intent = new Intent(this,Home.class);
             intent.putExtra(EMAIL,user.getEmail());
             intent.putExtra(FULL_NAME,user.getFull_name());
