@@ -10,26 +10,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import Utils.utils;
 import models.SVCDB;
 import models.VisitCardDAO;
 import models.VisitCardDTO;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class Home extends AppCompatActivity {
+    public static final String VC_DATA = "com.example.svc.VC_DATA";
+
     private String email;
     private String full_name;
     private SVCDB db;
     ArrayList<VisitCardDTO> userVisitCards;
 
     TableLayout visitCardsTable;
-    TableRow rowHeader;
-    TextView vc_email, vc_full_name, vc_position_title, vc_company, vc_address, vc_telephone, vc_fax, vc_mobile, vc_website;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,35 +58,43 @@ public class Home extends AppCompatActivity {
             VisitCardDTO vc = userVisitCards.get(i-1);
 
             TableRow row = new TableRow(this);
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,TableRow.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(8, 2, 16, 2);
             row.setLayoutParams(lp);
+
             //set the views
             TextView full_name = new TextView(this);
             full_name.setText(vc.getFull_name());
-            row.addView(full_name);
+            lp.setMargins(utils.pxFromDp(this,8),0,utils.pxFromDp(this,16),0);
+            row.addView(full_name,lp);
 
             TextView position_title = new TextView(this);
             position_title.setText(vc.getPosition_title());
-            row.addView(position_title);
+            lp.setMargins(utils.pxFromDp(this,8),0,utils.pxFromDp(this,16),0);
+            row.addView(position_title,lp);
 
             TextView company = new TextView(this);
             company.setText(vc.getCompany());
-            row.addView(company);
+            lp.setMargins(utils.pxFromDp(this,8),0,utils.pxFromDp(this,16),0);
+            row.addView(company,lp);
 
 
             Button viewVC = new Button(this);
             viewVC.setText("Edit");
+            viewVC.setMinHeight(0);
+            viewVC.setMinimumHeight(0);
+            viewVC.setHeight(90);
+            lp.setMargins(utils.pxFromDp(this,8),0,utils.pxFromDp(this,16),0);
             Context context = this;
             viewVC.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context,ViewVisitCard.class);
-//                    intent.putExtra(EMAIL,user.getEmail());
-//                    intent.putExtra(FULL_NAME,user.getFull_name());
+                    intent.putExtra(VC_DATA,vc.toString());
                     startActivity(intent);
                 }
             });
-            row.addView(viewVC);
+            row.addView(viewVC,lp);
 
             //add the row to the table
             visitCardsTable.addView(row,i);

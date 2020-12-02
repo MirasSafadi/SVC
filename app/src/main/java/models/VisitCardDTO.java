@@ -120,6 +120,23 @@ public class VisitCardDTO {
 
     @Override
     public String toString() {
-        return String.format("%s %s %s %s",this.id,this.owner,this.email,this.full_name);
+        return String.format("%d;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",this.id,this.owner,this.email,this.full_name,this.position_title,this.company,this.address,this.telephone,this.fax,this.mobile,this.website);
+    }
+
+    public static VisitCardDTO stringToVisitCard(String enc){
+        String[] info = enc.split(";");
+        return new VisitCardDTO.Builder().
+                                setId(Integer.parseInt(info[0])).
+                                setOwner(info[1]).
+                                setEmail(info[2]).
+                                setFull_name(info[3]).
+                                setPosition_title(info[4]).
+                                setCompany(info[5]).
+                                setAddress(info[6]).
+                                setTelephone(info[7]).
+                                setFax(info[8]).
+                                setMobile(info[9]).
+                                setWebsite(info[10]).
+                                build();
     }
 }

@@ -64,6 +64,6 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return String.format("%s %s",this.full_name,this.email);
+        return String.format("%s, %s",this.full_name,this.email);
     }
 }
