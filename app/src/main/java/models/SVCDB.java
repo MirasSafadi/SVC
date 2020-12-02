@@ -10,10 +10,10 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SVCDB extends SQLiteOpenHelper {
 
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "SVCDB.db";
     //Constants for the User table
     public static final String USER_TABLE_NAME = "user";
@@ -49,11 +49,11 @@ public class SVCDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
         db.execSQL(
-                "CREATE TABLE `user` (`email` VARCHAR(255) NOT NULL, `password` VARCHAR(255) NOT NULL, `full_name` VARCHAR(255),  PRIMARY KEY (`email`));"
+                "CREATE TABLE `user` (`email` VARCHAR(255) PRIMARY KEY, `password` VARCHAR(255) NOT NULL, `full_name` VARCHAR(255));"
         );
         db.execSQL(
                 "CREATE TABLE `visit_card` (" +
-                        "  `id` INT NOT NULL, " +
+                        "  `id` INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                         "  `owner` VARCHAR(255), " +
                         "  `email` VARCHAR(255), " +
                         "  `full_name` VARCHAR(255), " +
@@ -64,15 +64,12 @@ public class SVCDB extends SQLiteOpenHelper {
                         "  `fax` VARCHAR(15), " +
                         "  `mobile` VARCHAR(15), " +
                         "  `website` VARCHAR(255), " +
-                        "  PRIMARY KEY (`id`), " +
                         "  CONSTRAINT `owner` " +
                         "    FOREIGN KEY (`owner`) " +
                         "    REFERENCES `user` (`email`) " +
                         "    ON DELETE CASCADE " +
                         "    ON UPDATE CASCADE);"
         );
-        //for testing only: add dummy user to database
-        db.execSQL("INSERT INTO `user` (`email`, `full_name`, `password`) VALUES ('safadimiras@gmail.com', 'Miras Safadi', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');");
     }
 
     @Override
@@ -82,7 +79,7 @@ public class SVCDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS visit_card");
         onCreate(db);
     }
-
+    //user related methods
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public UserDTO getUser(String email){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -92,20 +89,11 @@ public class SVCDB extends SQLiteOpenHelper {
             String userEmail = cursor.getString(cursor.getColumnIndex(USER_COLUMN_EMAIL));
             String password = cursor.getString(cursor.getColumnIndex(USER_COLUMN_PASSWORD));
             String full_name = cursor.getString(cursor.getColumnIndex(USER_COLUMN_FULL_NAME));
-            return new UserDTO(userEmail,password,full_name,false);
-        }
-        return null;
-    }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public VisitCardDTO getVC(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM visit_card WHERE id = ?";
-        Cursor cursor = db.rawQuery(sql, new String[] {Integer.toString(id)});
-        if(cursor.moveToFirst()){
-            String VCid = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ID));
-            String owner = cursor.getString(cursor.getColumnIndex(VC_COLUMN_OWNER));
-            String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
-            return new VisitCardDTO(Integer.parseInt(VCid),owner,full_name,null,  null,  null, null,null);
+            return new UserDTO.Builder()
+                    .setEmail(userEmail)
+                    .setPassword(password,false)
+                    .setFull_name(full_name)
+                    .build();
         }
         return null;
     }
@@ -120,29 +108,109 @@ public class SVCDB extends SQLiteOpenHelper {
         long insert_result = db.insert(USER_TABLE_NAME, null, contentValues);
         return insert_result != -1;
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public boolean addVC(VisitCardDTO vc){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(VC_COLUMN_ID, vc.getId());
-        contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
-        contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
-        contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
-        contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getJob());
-        contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
-        contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
-        contentValues.put(VC_COLUMN_MOBILE, vc.getPhone_number());
-
-        long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);
-        return insert_result != -1;
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean removeUser(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(USER_TABLE_NAME, "email = ? ", new String[] { email}) == 1;
     }
+
+
+    //Visit card related methods
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public VisitCardDTO getVC(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM visit_card WHERE id = ?";
+        Cursor cursor = db.rawQuery(sql, new String[] { Integer.toString(id) });
+        if(cursor.moveToFirst()){
+            int vc_id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
+            String owner = cursor.getString(cursor.getColumnIndex(VC_COLUMN_OWNER));
+            String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
+            String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
+            String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));
+            String company = cursor.getString(cursor.getColumnIndex(VC_COLUMN_COMPANY));
+            String address = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ADDRESS));
+            String telephone = cursor.getString(cursor.getColumnIndex(VC_COLUMN_TELEPHONE));
+            String fax = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FAX));
+            String mobile = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MOBILE));
+            String website = cursor.getString(cursor.getColumnIndex(VC_COLUMN_WEBSITE));
+
+            return new VisitCardDTO.Builder().
+                    setId(vc_id).
+                    setOwner(owner).
+                    setEmail(email).
+                    setFull_name(full_name).
+                    setPosition_title(position_title).
+                    setCompany(company).
+                    setAddress(address).
+                    setTelephone(telephone).
+                    setFax(fax).
+                    setMobile(mobile).
+                    setWebsite(website).
+                    build();
+        }
+        return null;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean addVC(VisitCardDTO vc){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
+        contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
+        contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
+        contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getPosition_title());
+        contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
+        contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
+        contentValues.put(VC_COLUMN_MOBILE, vc.getTelephone());
+
+        long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);
+        return insert_result != -1;
+    }
+
+    public ArrayList<VisitCardDTO> getUserVisitCards(String userEmail){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM visit_card WHERE owner = ?";
+        Cursor cursor = db.rawQuery(sql, new String[] { userEmail });
+        ArrayList<VisitCardDTO> visitCards = new ArrayList<>();
+        cursor.moveToFirst();
+
+        while(cursor.isAfterLast() == false){
+            int id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
+            String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
+            String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
+            String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));
+            String company = cursor.getString(cursor.getColumnIndex(VC_COLUMN_COMPANY));
+            String address = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ADDRESS));
+            String telephone = cursor.getString(cursor.getColumnIndex(VC_COLUMN_TELEPHONE));
+            String fax = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FAX));
+            String mobile = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MOBILE));
+            String website = cursor.getString(cursor.getColumnIndex(VC_COLUMN_WEBSITE));
+
+
+            visitCards.add(new VisitCardDTO.Builder().
+                                            setId(id).
+                                            setOwner(userEmail).
+                                            setEmail(email).
+                                            setFull_name(full_name).
+                                            setPosition_title(position_title).
+                                            setCompany(company).
+                                            setAddress(address).
+                                            setTelephone(telephone).
+                                            setFax(fax).
+                                            setMobile(mobile).
+                                            setWebsite(website).
+                                            build()
+            );
+            cursor.moveToNext();
+        }
+        return visitCards;
+
+    }
+
+
+
+
 
 
 

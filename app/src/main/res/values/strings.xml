@@ -9,4 +9,17 @@
     <string name="login">Login</string>
     <string name="signup">SignUp</string>
     <string name="not_a_user_register">Not a user? Register.</string>
+    <string name="add_visit_card">Add Visit Card</string>
+    <string name="add">Add</string>
+    <string name="mobile">Mobile</string>
+    <string name="company">Company</string>
+    <string name="telephone">Telephone</string>
+    <string name="fax">Fax</string>
+    <string name="position_title">Position title</string>
+    <string name="website">Website</string>
+    <string name="address">Address</string>
+    <string name="test_text">some text to test layout</string>
+    <string name="position">Position</string>
+    <string name="details">Details</string>
+    <string name="viewVCWelcome">View Visit Card</string>
 </resources>

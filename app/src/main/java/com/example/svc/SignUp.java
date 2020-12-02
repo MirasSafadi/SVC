@@ -35,7 +35,8 @@ public class SignUp extends AppCompatActivity {
         String password2 = ((EditText) findViewById(R.id.cPasswordTR)).getText().toString();
 
         //validate input
-        //----------------------------------------------------------------------
+        //---------------------------------------------------------------------
+
         if(email.isEmpty() || full_name.isEmpty() || password1.isEmpty() || password2.isEmpty()){
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
@@ -75,7 +76,11 @@ public class SignUp extends AppCompatActivity {
         //----------------------------------------------------------------------
 
 
-        if(UserDAO.signUp(new UserDTO(email,password1,full_name,true),db)){
+        if(UserDAO.signUp(new UserDTO.Builder().
+                                        setEmail(email).
+                                        setFull_name(full_name).
+                                        setPassword(password1,true)
+                                        .build(),db)){
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }else{
