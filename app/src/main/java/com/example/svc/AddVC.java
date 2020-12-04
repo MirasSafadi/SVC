@@ -25,7 +25,7 @@ public class AddVC extends AppCompatActivity {
         db = new SVCDB(this);
     }
 
-    public void addVc(View v){
+    public void addVC(View v){
         String id = ((TextInputEditText) findViewById(R.id.AIdTR)).getText().toString();
         if(VisitCardDAO.addVC(new VisitCardDTO(Integer.parseInt(id), null, null, null,null,null,null,null), db)){
             Intent intent = new Intent(this,Home.class);

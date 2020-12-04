@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddVC">
+    tools:context=".EditVC">
 
     <TextView
-        android:id="@+id/atextView7"
+        android:id="@+id/EtextView7"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:gravity="center"
-        android:text="Add Visit Card"
+        android:text="Edit Visit Card"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.028" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AemailTR"
+        android:id="@+id/EemailTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="296dp"
@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AIdTR"
+        android:id="@+id/EIdTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="452dp"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/ownerTR"
+        android:id="@+id/EownerTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="400dp"
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/fullNameTR"
+        android:id="@+id/EfullNameTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="348dp"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AjobTR"
+        android:id="@+id/EjobTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="192dp"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AnumberTR"
+        android:id="@+id/EnumberTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="244dp"
@@ -100,7 +100,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AcompanyTR"
+        android:id="@+id/EcompanyTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="140dp"
@@ -113,7 +113,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AaddressTR"
+        android:id="@+id/EaddressTR"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="88dp"
@@ -126,18 +126,18 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/AddvcBtn"
+        android:id="@+id/EditvcBtn"
         android:layout_width="309dp"
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="100dp"
-        android:onClick="addVC"
+        android:onClick="editVC"
         android:text="Confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/AemailTR"
+        app:layout_constraintTop_toBottomOf="@id/EemailTR"
         app:layout_constraintVertical_bias="1.6" />
 
 
