@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/AjobTR"
+        android:id="@+id/AjobT"
         android:layout_width="316dp"
         android:layout_height="52dp"
         android:layout_marginBottom="192dp"
@@ -131,7 +131,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="100dp"
-        android:onClick="addVC"
+        android:onClick="addVc"
         android:text="Confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

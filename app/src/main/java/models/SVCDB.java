@@ -139,23 +139,6 @@ public class SVCDB extends SQLiteOpenHelper {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public boolean editVC(VisitCardDTO vc){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(VC_COLUMN_ID, vc.getId());
-        contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
-        contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
-        contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
-        contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getJob());
-        contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
-        contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
-        contentValues.put(VC_COLUMN_MOBILE, vc.getPhone_number());
-
-        long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);
-        return insert_result != -1;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean removeUser(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(USER_TABLE_NAME, "email = ? ", new String[] { email}) == 1;
