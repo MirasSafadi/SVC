@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-public class auth {
+public class Auth {
 
     //assumes both passwords are hashed.
     public static boolean checkPassword(String originalPassword, String passwordToCheck){
