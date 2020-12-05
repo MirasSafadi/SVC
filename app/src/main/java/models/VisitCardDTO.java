@@ -18,7 +18,7 @@ public class VisitCardDTO {
         this.owner = builder.owner;
         this.email = builder.email;
         this.full_name = builder.full_name;
-        this.position_title = builder.full_name;
+        this.position_title = builder.position_title;
         this.company = builder.company;
         this.address = builder.address;
         this.telephone = builder.telephone;
@@ -125,7 +125,7 @@ public class VisitCardDTO {
 
     public static VisitCardDTO stringToVisitCard(String enc){
         String[] info = enc.split(";");
-        return new VisitCardDTO.Builder().
+        return new Builder().
                                 setId(Integer.parseInt(info[0])).
                                 setOwner(info[1]).
                                 setEmail(info[2]).

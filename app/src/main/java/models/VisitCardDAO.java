@@ -16,7 +16,15 @@ public class VisitCardDAO {
     public static boolean addVC (VisitCardDTO vc, SVCDB db){
         //do input validation!!
         //get the vc from the database
-
+        System.out.println(vc.getPosition_title());
         return db.addVC(vc);
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static boolean editVC (VisitCardDTO vc, SVCDB db){
+        //do input validation!!
+        //get the vc from the database
+
+        return db.editVC(vc);
+    }
+
 }

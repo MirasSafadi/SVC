@@ -1,19 +1,17 @@
 package com.example.svc;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -100,5 +98,9 @@ public class Home extends AppCompatActivity {
             visitCardsTable.addView(row,i);
         }
 
+    }
+    public void addVC(View v){
+        Intent intent = new Intent(this,AddVC.class);
+        startActivity(intent);
     }
 }
