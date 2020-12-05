@@ -1,17 +1,19 @@
 package com.example.svc;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import models.VisitCardDTO;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class ViewVisitCard extends AppCompatActivity {
+    public static final String VC_DATA_EDIT = "com.example.svc.VC_DATA_EDIT";
     private VisitCardDTO vc;
 
     @Override
@@ -49,5 +51,10 @@ public class ViewVisitCard extends AppCompatActivity {
         TextView website = (TextView) findViewById(R.id.websiteTextView);
         website.setText("Website: " + vc.getWebsite());
 
+    }
+    public void Edit(View v){
+        Intent intent = new Intent(this,EditVC.class);
+        intent.putExtra(VC_DATA_EDIT,vc.toString());
+        startActivity(intent);
     }
 }

@@ -4,34 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddVC">
+    tools:context=".EditVC">
 
     <TextView
-        android:id="@+id/atextView7"
+        android:id="@+id/etextView7"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:gravity="center"
-        android:text="@string/add_visit_card"
+        android:text="Edit Visit Card"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@+id/escrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/AddvcBtn"
+        android:id="@+id/EditvcBtn"
         android:layout_width="309dp"
         android:layout_height="56dp"
-        android:onClick="addVc"
-        android:text="@string/add"
+        android:onClick="editVC"
+        android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/escrollView2" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/escrollView2"
         android:layout_width="342dp"
         android:layout_height="432dp"
         android:layout_marginEnd="1dp"
@@ -50,19 +50,19 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/nameTF"
+                android:id="@+id/enameTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/full_name"
+                android:hint="Full Name"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"/>
 
             <EditText
-                android:id="@+id/ownerTF"
+                android:id="@+id/eownerTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -74,67 +74,67 @@
                 android:layout_marginLeft="5dp"/>
 
             <EditText
-                android:id="@+id/mobileTF"
+                android:id="@+id/emobileTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/mobile"
+                android:hint="Mobile"
                 android:importantForAutofill="no"
                 android:inputType="phone"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp" />
 
             <EditText
-                android:id="@+id/companyTF"
+                android:id="@+id/ecompanyTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/company"
+                android:hint="Company"
                 android:inputType="textPersonName"
                 android:importantForAutofill="no"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp" />
 
             <EditText
-                android:id="@+id/telephoneTF"
+                android:id="@+id/etelephoneTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/telephone"
+                android:hint="Telephone"
                 android:inputType="phone"
                 android:importantForAutofill="no"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp" />
 
             <EditText
-                android:id="@+id/emailET"
+                android:id="@+id/eemailET"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/email"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:importantForAutofill="no"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp" />
 
             <EditText
-                android:id="@+id/faxTF"
+                android:id="@+id/efaxTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/fax"
+                android:hint="Fax"
                 android:inputType="phone"
                 android:importantForAutofill="no"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp" />
 
             <EditText
-                android:id="@+id/positionTF"
+                android:id="@+id/epositionTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -146,24 +146,24 @@
                 android:layout_marginLeft="5dp" />
 
             <EditText
-                android:id="@+id/websiteTF"
+                android:id="@+id/ewebsiteTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/website"
+                android:hint="Website"
                 android:inputType="textPersonName"
                 android:importantForAutofill="no"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp" />
 
             <EditText
-                android:id="@+id/addressTF"
+                android:id="@+id/eaddressTF"
                 android:layout_width="326dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/address"
+                android:hint="Address"
                 android:inputType="textPostalAddress"
                 android:importantForAutofill="no"
                 android:layout_marginTop="10dp"

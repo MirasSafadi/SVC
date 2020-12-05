@@ -162,6 +162,27 @@ public class SVCDB extends SQLiteOpenHelper {
         contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getPosition_title());
         contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
         contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
+        contentValues.put(VC_COLUMN_TELEPHONE, vc.getTelephone());
+        contentValues.put(VC_COLUMN_FAX, vc.getFax());
+        contentValues.put(VC_COLUMN_MOBILE, vc.getMobile());
+        contentValues.put(VC_COLUMN_WEBSITE, vc.getWebsite());
+        System.out.println(vc.getPosition_title());
+        long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);
+        System.out.println("result"+ insert_result);
+        return insert_result != -1;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean editVC(VisitCardDTO vc){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(VC_COLUMN_ID, vc.getId());
+        contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
+        contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
+        contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
+        contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getPosition_title());
+        contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
+        contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
         contentValues.put(VC_COLUMN_MOBILE, vc.getTelephone());
 
         long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);

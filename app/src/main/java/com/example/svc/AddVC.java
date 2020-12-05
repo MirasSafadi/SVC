@@ -10,8 +10,6 @@ import android.widget.EditText;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import models.SVCDB;
 import models.VisitCardDAO;
 import models.VisitCardDTO;
@@ -29,6 +27,7 @@ public class AddVC extends AppCompatActivity {
     }
 
     public void addVc(View v){
+        String owner = ((EditText) findViewById(R.id.ownerTF)).getText().toString();
         String full_name = ((EditText) findViewById(R.id.nameTF)).getText().toString();
         String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
         String company = ((EditText) findViewById(R.id.companyTF)).getText().toString();
@@ -39,7 +38,7 @@ public class AddVC extends AppCompatActivity {
         String website = ((EditText) findViewById(R.id.websiteTF)).getText().toString();
         String address = ((EditText) findViewById(R.id.addressTF)).getText().toString();
 
-
+        System.out.println(position_title);
         //check if fields are not empty and validate them with regex if so...
         boolean isValid = true;
         if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
@@ -55,17 +54,28 @@ public class AddVC extends AppCompatActivity {
         if(!website.isEmpty() && !InputValidators.validate(InputValidators.WEBSITE,website))
             isValid = false;
 
-//        if(VisitCardDAO.addVC(new VisitCardDTO(Integer.parseInt(id), null, null, null,null,null,null,null), db)){
-//            Intent intent = new Intent(this,Home.class);
-//            startActivity(intent);
-//        }else{
-//            new AlertDialog.Builder(this)
-//                    .setTitle("You already have this visit card!")
-//                    .setMessage("Please add another visit card with another ID!")
-//                    .setNeutralButton("Close", null)
-//                    .setIcon(android.R.drawable.ic_dialog_alert)
-//                    .show();
-//
-//        }
+       if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
+               .setOwner(owner)
+               .setEmail(email)
+               .setFull_name(full_name)
+               .setPosition_title(position_title)
+               .setCompany(company)
+               .setAddress(address)
+               .setTelephone(telephone)
+               .setFax(fax)
+               .setMobile(mobile)
+               .setWebsite(website)
+               .build(), db)){
+            Intent intent = new Intent(this,Home.class);
+            startActivity(intent);
+        }else{
+            new AlertDialog.Builder(this)
+                   .setTitle("You already have this visit card!")
+                    .setMessage("Please add another visit card with another ID!")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+        }
     }
 }
