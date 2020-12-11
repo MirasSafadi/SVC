@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import models.SVCDB;
 import models.VisitCardDAO;
 import models.VisitCardDTO;
+import security.InputValidators;
 
 public class EditVC extends AppCompatActivity {
     private SVCDB db;
@@ -25,6 +26,10 @@ public class EditVC extends AppCompatActivity {
         db = new SVCDB(this);
         Intent intent = getIntent();
         vc = VisitCardDTO.stringToVisitCard(intent.getStringExtra(ViewVisitCard.VC_DATA_EDIT));
+        
+        EditText owner = (EditText) findViewById(R.id.eownerTF);
+        owner.setText(vc.getOwner());
+
         EditText email = (EditText) findViewById(R.id.eemailET);
         email.setText(vc.getEmail());
 
@@ -65,6 +70,31 @@ public class EditVC extends AppCompatActivity {
         String website = ((EditText) findViewById(R.id.websiteTF)).getText().toString();
         String address = ((EditText) findViewById(R.id.addressTF)).getText().toString();
 
+        //check if fields are not empty and validate them with regex if so...
+        boolean isValid = true;
+        if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
+            isValid = false;
+        if(!mobile.isEmpty() && !InputValidators.validate(InputValidators.MOBILE,mobile))
+            isValid = false;
+        if(!telephone.isEmpty() && !InputValidators.validate(InputValidators.TELEPHONE,telephone))
+            isValid = false;
+        if(!email.isEmpty() && !InputValidators.validate(InputValidators.EMAIL,email))
+            isValid = false;
+        if(!fax.isEmpty() && !InputValidators.validate(InputValidators.FAX,fax))
+            isValid = false;
+        if(!website.isEmpty() && !InputValidators.validate(InputValidators.WEBSITE,website))
+            isValid = false;
+
+        if(!isValid){
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("One or more of the fields is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
         if(VisitCardDAO.editVC(new VisitCardDTO.Builder()
                 .setEmail(email)
                 .setFull_name(full_name)
@@ -80,8 +110,8 @@ public class EditVC extends AppCompatActivity {
             startActivity(intent);
         }else{
             new AlertDialog.Builder(this)
-                    .setTitle("You already have this visit card!")
-                    .setMessage("Please add another visit card with another ID!")
+                    .setTitle("This visit card hasn't updated.")
+                    .setMessage("Please try again!")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
