@@ -88,7 +88,16 @@ public class VisitCardDTO {
             return this;
         }
         //===========================================
-        public VisitCardDTO build(){
+        public VisitCardDTO build() throws IllegalArgumentException{
+            if(email == null) this.email = "";
+            if(full_name == null) throw new IllegalArgumentException("This field is mandatory");
+            if(position_title == null) throw new IllegalArgumentException("This field is mandatory");
+            if(company == null) throw new IllegalArgumentException("This field is mandatory");
+            if(address == null) this.address = "";
+            if(telephone == null) this.telephone = "";
+            if(fax == null) this.fax = "";
+            if(mobile == null) this.mobile = "";
+            if(website == null) this.website = "";
             return new VisitCardDTO(this);
         }
     }
@@ -126,17 +135,17 @@ public class VisitCardDTO {
     public static VisitCardDTO stringToVisitCard(String enc){
         String[] info = enc.split(";");
         return new Builder().
-                                setId(Integer.parseInt(info[0])).
-                                setOwner(info[1]).
-                                setEmail(info[2]).
-                                setFull_name(info[3]).
-                                setPosition_title(info[4]).
-                                setCompany(info[5]).
-                                setAddress(info[6]).
-                                setTelephone(info[7]).
-                                setFax(info[8]).
-                                setMobile(info[9]).
-                                setWebsite(info[10]).
-                                build();
+                             setId(Integer.parseInt(info[0])).
+                             setOwner(info[1]).
+                             setEmail(info[2]).
+                             setFull_name(info[3]).
+                             setPosition_title(info[4]).
+                             setCompany(info[5]).
+                             setAddress(info[6]).
+                             setTelephone(info[7]).
+                             setFax(info[8]).
+                             setMobile(info[9]).
+                             setWebsite(info[10]).
+                             build();
     }
 }

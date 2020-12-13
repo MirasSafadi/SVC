@@ -18,16 +18,18 @@ import security.InputValidators;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class AddVC extends AppCompatActivity {
     private SVCDB db;
+    private String owner_email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_vc);
         db = new SVCDB(this);
         //get the email of the user from intent
+        Intent intent = getIntent();
+        owner_email = intent.getStringExtra(Home.USER_EMAIL);
     }
 
     public void addVc(View v){
-        String owner = ((EditText) findViewById(R.id.ownerTF)).getText().toString();
         String full_name = ((EditText) findViewById(R.id.nameTF)).getText().toString();
         String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
         String company = ((EditText) findViewById(R.id.companyTF)).getText().toString();
@@ -38,7 +40,7 @@ public class AddVC extends AppCompatActivity {
         String website = ((EditText) findViewById(R.id.websiteTF)).getText().toString();
         String address = ((EditText) findViewById(R.id.addressTF)).getText().toString();
 
-        System.out.println(position_title);
+
         //check if fields are not empty and validate them with regex if so...
         boolean isValid = true;
         if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
@@ -54,8 +56,18 @@ public class AddVC extends AppCompatActivity {
         if(!website.isEmpty() && !InputValidators.validate(InputValidators.WEBSITE,website))
             isValid = false;
 
-       if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
-               .setOwner(owner)
+
+        if(!isValid) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid Input")
+                    .setMessage("One or more of the fields is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+        if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
+               .setOwner(owner_email)
                .setEmail(email)
                .setFull_name(full_name)
                .setPosition_title(position_title)
@@ -69,6 +81,7 @@ public class AddVC extends AppCompatActivity {
             Intent intent = new Intent(this,Home.class);
             startActivity(intent);
         }else{
+           //add a condition in the DB that checks if a visit card for this user with THE SAME VALUES FOR ALL FIELDS
             new AlertDialog.Builder(this)
                    .setTitle("You already have this visit card!")
                     .setMessage("Please add another visit card with another ID!")

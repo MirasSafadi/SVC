@@ -23,6 +23,7 @@ import models.VisitCardDTO;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class Home extends AppCompatActivity {
     public static final String VC_DATA = "com.example.svc.VC_DATA";
+    public static final String USER_EMAIL = "com.example.svc.USER_EMAIL";
 
     private String email;
     private String full_name;
@@ -101,6 +102,7 @@ public class Home extends AppCompatActivity {
     }
     public void addVC(View v){
         Intent intent = new Intent(this,AddVC.class);
+        intent.putExtra(USER_EMAIL,email);
         startActivity(intent);
     }
 }

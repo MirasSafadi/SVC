@@ -62,18 +62,6 @@
                 android:layout_marginLeft="5dp"/>
 
             <EditText
-                android:id="@+id/ownerTF"
-                android:layout_width="329dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Owner"
-                android:importantForAutofill="no"
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="5dp"/>
-
-            <EditText
                 android:id="@+id/mobileTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
