@@ -60,15 +60,15 @@ public class EditVC extends AppCompatActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void editVC(View v){
-        String full_name = ((EditText) findViewById(R.id.nameTF)).getText().toString();
-        String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
-        String company = ((EditText) findViewById(R.id.companyTF)).getText().toString();
-        String telephone = ((EditText) findViewById(R.id.telephoneTF)).getText().toString();
-        String email = ((EditText) findViewById(R.id.emailET)).getText().toString();
-        String fax = ((EditText) findViewById(R.id.faxTF)).getText().toString();
-        String position_title = ((EditText) findViewById(R.id.positionTF)).getText().toString();
-        String website = ((EditText) findViewById(R.id.websiteTF)).getText().toString();
-        String address = ((EditText) findViewById(R.id.addressTF)).getText().toString();
+        String full_name = ((EditText) findViewById(R.id.enameTF)).getText().toString();
+        String mobile = ((EditText) findViewById(R.id.emobileTF)).getText().toString();
+        String company = ((EditText) findViewById(R.id.ecompanyTF)).getText().toString();
+        String telephone = ((EditText) findViewById(R.id.etelephoneTF)).getText().toString();
+        String email = ((EditText) findViewById(R.id.eemailET)).getText().toString();
+        String fax = ((EditText) findViewById(R.id.efaxTF)).getText().toString();
+        String position_title = ((EditText) findViewById(R.id.epositionTF)).getText().toString();
+        String website = ((EditText) findViewById(R.id.ewebsiteTF)).getText().toString();
+        String address = ((EditText) findViewById(R.id.eaddressTF)).getText().toString();
 
         //check if fields are not empty and validate them with regex if so...
         boolean isValid = true;
@@ -97,6 +97,7 @@ public class EditVC extends AppCompatActivity {
 
         if(VisitCardDAO.editVC(new VisitCardDTO.Builder()
                 .setEmail(email)
+                .setOwner(vc.getOwner())
                 .setFull_name(full_name)
                 .setPosition_title(position_title)
                 .setCompany(company)
