@@ -132,8 +132,12 @@ public class VisitCardDTO {
         return String.format("%d;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",this.id,this.owner,this.email,this.full_name,this.position_title,this.company,this.address,this.telephone,this.fax,this.mobile,this.website);
     }
 
+    //TODO: deal with missing fields edge case
     public static VisitCardDTO stringToVisitCard(String enc){
         String[] info = enc.split(";");
+//        if(info.length != 11){//no website field
+//            info = Utils.utils.fillArray(info.length,info,"");
+//        }
         return new Builder().
                              setId(Integer.parseInt(info[0])).
                              setOwner(info[1]).

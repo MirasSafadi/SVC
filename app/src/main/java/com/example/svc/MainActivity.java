@@ -12,14 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import Utils.Constants;
 import models.SVCDB;
 import models.UserDAO;
 import models.UserDTO;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class MainActivity extends AppCompatActivity {
-    public static final String EMAIL = "com.example.svc.EMAIL";
-    public static final String FULL_NAME = "com.example.svc.FULL_NAME";
     private SVCDB db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
                                             setPassword(password,true).
                                             build(),db)) != null){
             Intent intent = new Intent(this,Home.class);
-            intent.putExtra(EMAIL,user.getEmail());
-            intent.putExtra(FULL_NAME,user.getFull_name());
+            intent.putExtra(Constants.USER,user.toString());
             startActivity(intent);
         }else{
             new AlertDialog.Builder(this)
@@ -63,10 +61,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     //takes the user to the registration page
-    public void link(View v){
+    public void register(View v){
         Intent intent = new Intent(this,SignUp.class);
         startActivity(intent);
     }
+
+    //remove afterwards
     public void addVC(View v){
         Intent intent = new Intent(this,AddVC.class);
         startActivity(intent);

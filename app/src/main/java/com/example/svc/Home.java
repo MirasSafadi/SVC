@@ -15,22 +15,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import Utils.Constants;
 import Utils.utils;
 import models.SVCDB;
+import models.UserDTO;
 import models.VisitCardDAO;
 import models.VisitCardDTO;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class Home extends AppCompatActivity {
-    public static final String VC_DATA = "com.example.svc.VC_DATA";
-    public static final String USER_EMAIL = "com.example.svc.USER_EMAIL";
-
-    private String email;
-    private String full_name;
+    private ArrayList<VisitCardDTO> userVisitCards;
+    private UserDTO user;
     private SVCDB db;
-    ArrayList<VisitCardDTO> userVisitCards;
 
-    TableLayout visitCardsTable;
+
+    private TableLayout visitCardsTable;
 
 
     @Override
@@ -42,14 +41,14 @@ public class Home extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        email = intent.getStringExtra(MainActivity.EMAIL);
-        full_name = intent.getStringExtra(MainActivity.FULL_NAME);
+        user = UserDTO.stringToUser(intent.getStringExtra(Constants.USER));
 
-        userVisitCards = VisitCardDAO.getUserVisitCards(email,db);
+
+        userVisitCards = VisitCardDAO.getUserVisitCards(user.getEmail(),db);
         System.out.println(userVisitCards);
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.welcomeTV);
-        textView.setText("Welcome, " + full_name);
+        textView.setText("Welcome, " + user.getFull_name());
 
         visitCardsTable = (TableLayout) findViewById(R.id.visitCardsTable);
 
@@ -89,7 +88,8 @@ public class Home extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context,ViewVisitCard.class);
-                    intent.putExtra(VC_DATA,vc.toString());
+                    intent.putExtra(Constants.VC_DATA,vc.toString());
+                    intent.putExtra(Constants.USER,user.toString());
                     startActivity(intent);
                 }
             });
@@ -102,7 +102,7 @@ public class Home extends AppCompatActivity {
     }
     public void addVC(View v){
         Intent intent = new Intent(this,AddVC.class);
-        intent.putExtra(USER_EMAIL,email);
+        intent.putExtra(Constants.USER,user.toString());
         startActivity(intent);
     }
 }

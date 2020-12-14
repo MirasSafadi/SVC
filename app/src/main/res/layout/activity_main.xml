@@ -75,7 +75,7 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:onClick="link"
+        android:onClick="register"
         android:text="@string/not_a_user_register"
         android:textColor="#03A9F4"
         android:textSize="18sp"

@@ -10,7 +10,9 @@ import android.widget.EditText;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import Utils.Constants;
 import models.SVCDB;
+import models.UserDTO;
 import models.VisitCardDAO;
 import models.VisitCardDTO;
 import security.InputValidators;
@@ -18,7 +20,7 @@ import security.InputValidators;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class AddVC extends AppCompatActivity {
     private SVCDB db;
-    private String owner_email;
+    private UserDTO user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,7 @@ public class AddVC extends AppCompatActivity {
         db = new SVCDB(this);
         //get the email of the user from intent
         Intent intent = getIntent();
-        owner_email = intent.getStringExtra(Home.USER_EMAIL);
+        user = UserDTO.stringToUser(intent.getStringExtra(Constants.USER));
     }
 
     public void addVc(View v){
@@ -67,7 +69,7 @@ public class AddVC extends AppCompatActivity {
             return;
         }
         if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
-               .setOwner(owner_email)
+               .setOwner(user.getEmail())
                .setEmail(email)
                .setFull_name(full_name)
                .setPosition_title(position_title)
@@ -79,6 +81,8 @@ public class AddVC extends AppCompatActivity {
                .setWebsite(website)
                .build(), db)){
             Intent intent = new Intent(this,Home.class);
+            //putExtra...
+            intent.putExtra(Constants.USER,user.toString());
             startActivity(intent);
         }else{
            //add a condition in the DB that checks if a visit card for this user with THE SAME VALUES FOR ALL FIELDS

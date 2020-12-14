@@ -10,21 +10,27 @@ import android.widget.EditText;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import Utils.Constants;
 import models.SVCDB;
+import models.UserDTO;
 import models.VisitCardDAO;
 import models.VisitCardDTO;
 
+@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class EditVC extends AppCompatActivity {
     private SVCDB db;
     private VisitCardDTO vc;
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private UserDTO user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_v_c);
         db = new SVCDB(this);
         Intent intent = getIntent();
-        vc = VisitCardDTO.stringToVisitCard(intent.getStringExtra(ViewVisitCard.VC_DATA_EDIT));
+        vc = VisitCardDTO.stringToVisitCard(intent.getStringExtra(Constants.VC_DATA));
+        user = UserDTO.stringToUser(intent.getStringExtra(Constants.USER));
+
         EditText email = (EditText) findViewById(R.id.eemailET);
         email.setText(vc.getEmail());
 
@@ -53,7 +59,6 @@ public class EditVC extends AppCompatActivity {
         website.setText(vc.getWebsite());
 
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void editVC(View v){
         String full_name = ((EditText) findViewById(R.id.nameTF)).getText().toString();
         String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
@@ -77,8 +82,11 @@ public class EditVC extends AppCompatActivity {
                 .setWebsite(website)
                 .build(), db)){
             Intent intent = new Intent(this,Home.class);
+            //putExtra
+            intent.putExtra(Constants.USER,user.toString());
             startActivity(intent);
         }else{
+            //TODO: check if the visit card exists by comparing all the values not by ID
             new AlertDialog.Builder(this)
                     .setTitle("You already have this visit card!")
                     .setMessage("Please add another visit card with another ID!")
