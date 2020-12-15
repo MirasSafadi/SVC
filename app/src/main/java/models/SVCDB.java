@@ -154,6 +154,7 @@ public class SVCDB extends SQLiteOpenHelper {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean addVC(VisitCardDTO vc){
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
@@ -176,17 +177,19 @@ public class SVCDB extends SQLiteOpenHelper {
     public boolean editVC(VisitCardDTO vc){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(VC_COLUMN_ID, vc.getId());
         contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
         contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
         contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
         contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getPosition_title());
         contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
         contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
-        contentValues.put(VC_COLUMN_MOBILE, vc.getTelephone());
+        contentValues.put(VC_COLUMN_TELEPHONE, vc.getTelephone());
+        contentValues.put(VC_COLUMN_FAX, vc.getFax());
+        contentValues.put(VC_COLUMN_MOBILE, vc.getMobile());
+        contentValues.put(VC_COLUMN_WEBSITE, vc.getWebsite());
 
-        long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);
-        return insert_result != -1;
+        long update_result= db.update(VC_TABLE_NAME, contentValues,"owner = ? ", new String[] {vc.getOwner()});
+        return update_result != -1;
     }
 
     public ArrayList<VisitCardDTO> getUserVisitCards(String userEmail){
@@ -198,6 +201,7 @@ public class SVCDB extends SQLiteOpenHelper {
 
         while(cursor.isAfterLast() == false){
             int id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
+            System.out.println(id);
             String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
             String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
             String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));

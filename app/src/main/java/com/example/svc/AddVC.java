@@ -58,16 +58,16 @@ public class AddVC extends AppCompatActivity {
         if(!website.isEmpty() && !InputValidators.validate(InputValidators.WEBSITE,website))
             isValid = false;
 
-
-        if(!isValid) {
+        if(!isValid){
             new AlertDialog.Builder(this)
-                    .setTitle("Invalid Input")
+                    .setTitle("Invalid input")
                     .setMessage("One or more of the fields is invalid")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
             return;
         }
+      
         if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
                .setOwner(user.getEmail())
                .setEmail(email)

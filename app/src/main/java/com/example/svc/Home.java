@@ -78,7 +78,7 @@ public class Home extends AppCompatActivity {
 
 
             Button viewVC = new Button(this);
-            viewVC.setText("Edit");
+            viewVC.setText("View");
             viewVC.setMinHeight(0);
             viewVC.setMinimumHeight(0);
             viewVC.setHeight(90);

@@ -15,6 +15,7 @@ import models.SVCDB;
 import models.UserDTO;
 import models.VisitCardDAO;
 import models.VisitCardDTO;
+import security.InputValidators;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class EditVC extends AppCompatActivity {
@@ -28,8 +29,12 @@ public class EditVC extends AppCompatActivity {
         setContentView(R.layout.activity_edit_v_c);
         db = new SVCDB(this);
         Intent intent = getIntent();
+
         vc = VisitCardDTO.stringToVisitCard(intent.getStringExtra(Constants.VC_DATA));
         user = UserDTO.stringToUser(intent.getStringExtra(Constants.USER));
+        
+        EditText owner = (EditText) findViewById(R.id.eownerTF);
+        owner.setText(vc.getOwner());
 
         EditText email = (EditText) findViewById(R.id.eemailET);
         email.setText(vc.getEmail());
@@ -60,18 +65,44 @@ public class EditVC extends AppCompatActivity {
 
     }
     public void editVC(View v){
-        String full_name = ((EditText) findViewById(R.id.nameTF)).getText().toString();
-        String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
-        String company = ((EditText) findViewById(R.id.companyTF)).getText().toString();
-        String telephone = ((EditText) findViewById(R.id.telephoneTF)).getText().toString();
-        String email = ((EditText) findViewById(R.id.emailET)).getText().toString();
-        String fax = ((EditText) findViewById(R.id.faxTF)).getText().toString();
-        String position_title = ((EditText) findViewById(R.id.positionTF)).getText().toString();
-        String website = ((EditText) findViewById(R.id.websiteTF)).getText().toString();
-        String address = ((EditText) findViewById(R.id.addressTF)).getText().toString();
+        String full_name = ((EditText) findViewById(R.id.enameTF)).getText().toString();
+        String mobile = ((EditText) findViewById(R.id.emobileTF)).getText().toString();
+        String company = ((EditText) findViewById(R.id.ecompanyTF)).getText().toString();
+        String telephone = ((EditText) findViewById(R.id.etelephoneTF)).getText().toString();
+        String email = ((EditText) findViewById(R.id.eemailET)).getText().toString();
+        String fax = ((EditText) findViewById(R.id.efaxTF)).getText().toString();
+        String position_title = ((EditText) findViewById(R.id.epositionTF)).getText().toString();
+        String website = ((EditText) findViewById(R.id.ewebsiteTF)).getText().toString();
+        String address = ((EditText) findViewById(R.id.eaddressTF)).getText().toString();
+
+        //check if fields are not empty and validate them with regex if so...
+        boolean isValid = true;
+        if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
+            isValid = false;
+        if(!mobile.isEmpty() && !InputValidators.validate(InputValidators.MOBILE,mobile))
+            isValid = false;
+        if(!telephone.isEmpty() && !InputValidators.validate(InputValidators.TELEPHONE,telephone))
+            isValid = false;
+        if(!email.isEmpty() && !InputValidators.validate(InputValidators.EMAIL,email))
+            isValid = false;
+        if(!fax.isEmpty() && !InputValidators.validate(InputValidators.FAX,fax))
+            isValid = false;
+        if(!website.isEmpty() && !InputValidators.validate(InputValidators.WEBSITE,website))
+            isValid = false;
+
+        if(!isValid){
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("One or more of the fields is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
 
         if(VisitCardDAO.editVC(new VisitCardDTO.Builder()
                 .setEmail(email)
+                .setOwner(vc.getOwner())
                 .setFull_name(full_name)
                 .setPosition_title(position_title)
                 .setCompany(company)
@@ -88,8 +119,8 @@ public class EditVC extends AppCompatActivity {
         }else{
             //TODO: check if the visit card exists by comparing all the values not by ID
             new AlertDialog.Builder(this)
-                    .setTitle("You already have this visit card!")
-                    .setMessage("Please add another visit card with another ID!")
+                    .setTitle("This visit card hasn't updated.")
+                    .setMessage("Please try again!")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
