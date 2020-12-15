@@ -10,7 +10,9 @@ import android.widget.EditText;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import Utils.Constants;
 import models.SVCDB;
+import models.UserDTO;
 import models.VisitCardDAO;
 import models.VisitCardDTO;
 import security.InputValidators;
@@ -18,16 +20,18 @@ import security.InputValidators;
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class AddVC extends AppCompatActivity {
     private SVCDB db;
+    private UserDTO user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_vc);
         db = new SVCDB(this);
         //get the email of the user from intent
+        Intent intent = getIntent();
+        user = UserDTO.stringToUser(intent.getStringExtra(Constants.USER));
     }
 
     public void addVc(View v){
-        String owner = ((EditText) findViewById(R.id.ownerTF)).getText().toString();
         String full_name = ((EditText) findViewById(R.id.nameTF)).getText().toString();
         String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
         String company = ((EditText) findViewById(R.id.companyTF)).getText().toString();
@@ -38,7 +42,7 @@ public class AddVC extends AppCompatActivity {
         String website = ((EditText) findViewById(R.id.websiteTF)).getText().toString();
         String address = ((EditText) findViewById(R.id.addressTF)).getText().toString();
 
-        System.out.println(position_title);
+
         //check if fields are not empty and validate them with regex if so...
         boolean isValid = true;
         if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
@@ -63,9 +67,9 @@ public class AddVC extends AppCompatActivity {
                     .show();
             return;
         }
-
-       if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
-               .setOwner(owner)
+      
+        if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
+               .setOwner(user.getEmail())
                .setEmail(email)
                .setFull_name(full_name)
                .setPosition_title(position_title)
@@ -77,8 +81,11 @@ public class AddVC extends AppCompatActivity {
                .setWebsite(website)
                .build(), db)){
             Intent intent = new Intent(this,Home.class);
+            //putExtra...
+            intent.putExtra(Constants.USER,user.toString());
             startActivity(intent);
         }else{
+           //add a condition in the DB that checks if a visit card for this user with THE SAME VALUES FOR ALL FIELDS
             new AlertDialog.Builder(this)
                    .setTitle("You already have this visit card!")
                     .setMessage("Please add another visit card with another ID!")

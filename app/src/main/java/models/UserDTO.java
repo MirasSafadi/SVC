@@ -64,6 +64,15 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return String.format("%s, %s",this.full_name,this.email);
+        return String.format("%s;%s",this.full_name,this.email);
+    }
+
+
+    public static UserDTO stringToUser(String user){
+        String[] info = user.split(";");
+        return new UserDTO.Builder().
+                            setFull_name(info[0]).
+                            setEmail(info[1]).
+                            build();
     }
 }

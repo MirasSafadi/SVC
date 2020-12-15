@@ -9,12 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import Utils.Constants;
+import models.UserDTO;
 import models.VisitCardDTO;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class ViewVisitCard extends AppCompatActivity {
-    public static final String VC_DATA_EDIT = "com.example.svc.VC_DATA_EDIT";
     private VisitCardDTO vc;
+    private UserDTO user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,8 @@ public class ViewVisitCard extends AppCompatActivity {
         setContentView(R.layout.activity_view_visit_card);
 
         Intent intent = getIntent();
-        vc = VisitCardDTO.stringToVisitCard(intent.getStringExtra(Home.VC_DATA));
+        vc = VisitCardDTO.stringToVisitCard(intent.getStringExtra(Constants.VC_DATA));
+        user = UserDTO.stringToUser(intent.getStringExtra(Constants.USER));
 
         TextView email = (TextView) findViewById(R.id.emailTextView);
         email.setText("Email: " + vc.getEmail());
@@ -52,9 +55,14 @@ public class ViewVisitCard extends AppCompatActivity {
         website.setText("Website: " + vc.getWebsite());
 
     }
+    //TODO: add back button to Home
+
+    //TODO: add send VC (ultrasound)
+
     public void Edit(View v){
         Intent intent = new Intent(this,EditVC.class);
-        intent.putExtra(VC_DATA_EDIT,vc.toString());
+        intent.putExtra(Constants.VC_DATA,vc.toString());
+        intent.putExtra(Constants.USER,user.toString());
         startActivity(intent);
     }
 }
