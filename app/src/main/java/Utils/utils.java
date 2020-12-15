@@ -11,13 +11,13 @@ public class utils {
     public static int pxFromDp(final Context context, final float dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density);
     }
-    public static String[] fillArray(int size,String arr[], String s) {
+    public static String[] fillArray(String arr[]) {
         String newarr[] = new String[11];
-
-        for (int i = 0; i < size; i++)
+        int i = 0;
+        for (; i < arr.length; i++)
             newarr[i] = arr[i];
-
-        newarr[size] = s;
+        for(;i<11;i++)
+            newarr[i] = "";
 
         return newarr;
     }

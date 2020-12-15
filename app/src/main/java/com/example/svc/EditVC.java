@@ -32,9 +32,7 @@ public class EditVC extends AppCompatActivity {
 
         vc = VisitCardDTO.stringToVisitCard(intent.getStringExtra(Constants.VC_DATA));
         user = UserDTO.stringToUser(intent.getStringExtra(Constants.USER));
-        
-        EditText owner = (EditText) findViewById(R.id.eownerTF);
-        owner.setText(vc.getOwner());
+
 
         EditText email = (EditText) findViewById(R.id.eemailET);
         email.setText(vc.getEmail());

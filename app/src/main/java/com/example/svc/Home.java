@@ -81,7 +81,7 @@ public class Home extends AppCompatActivity {
             viewVC.setText("View");
             viewVC.setMinHeight(0);
             viewVC.setMinimumHeight(0);
-            viewVC.setHeight(90);
+            viewVC.setHeight(utils.pxFromDp(this,40));
             lp.setMargins(utils.pxFromDp(this,8),0,utils.pxFromDp(this,16),0);
             Context context = this;
             viewVC.setOnClickListener(new View.OnClickListener() {

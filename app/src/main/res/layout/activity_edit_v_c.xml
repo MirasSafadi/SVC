@@ -24,7 +24,7 @@
         android:layout_width="309dp"
         android:layout_height="56dp"
         android:onClick="editVC"
-        android:text="Edit"
+        android:text="Save Changes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,18 +58,6 @@
                 android:hint="Full Name"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="5dp"/>
-
-            <EditText
-                android:id="@+id/eownerTF"
-                android:layout_width="329dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Owner"
-                android:importantForAutofill="no"
-                android:inputType="textEmailAddress"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"/>
 

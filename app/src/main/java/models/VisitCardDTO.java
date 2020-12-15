@@ -1,5 +1,7 @@
 package models;
 
+import Utils.utils;
+
 public class VisitCardDTO {
     private int id;
     private String owner;
@@ -53,15 +55,18 @@ public class VisitCardDTO {
             this.email = email;
             return this;
         }
-        public Builder setFull_name(String full_name) {
+        public Builder setFull_name(String full_name) throws IllegalArgumentException{
+            if(full_name.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
             this.full_name = full_name;
             return this;
         }
-        public Builder setPosition_title(String position_title) {
+        public Builder setPosition_title(String position_title) throws IllegalArgumentException{
+            if(position_title.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
             this.position_title = position_title;
             return this;
         }
-        public Builder setCompany(String company) {
+        public Builder setCompany(String company) throws IllegalArgumentException{
+            if(company.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
             this.company = company;
             return this;
         }
@@ -88,16 +93,7 @@ public class VisitCardDTO {
             return this;
         }
         //===========================================
-        public VisitCardDTO build() throws IllegalArgumentException{
-            if(email == null) this.email = "";
-            if(full_name == null) throw new IllegalArgumentException("This field is mandatory");
-            if(position_title == null) throw new IllegalArgumentException("This field is mandatory");
-            if(company == null) throw new IllegalArgumentException("This field is mandatory");
-            if(address == null) this.address = "";
-            if(telephone == null) this.telephone = "";
-            if(fax == null) this.fax = "";
-            if(mobile == null) this.mobile = "";
-            if(website == null) this.website = "";
+        public VisitCardDTO build() {
             return new VisitCardDTO(this);
         }
     }
@@ -132,12 +128,11 @@ public class VisitCardDTO {
         return String.format("%d;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",this.id,this.owner,this.email,this.full_name,this.position_title,this.company,this.address,this.telephone,this.fax,this.mobile,this.website);
     }
 
-    //TODO: deal with missing fields edge case
+
     public static VisitCardDTO stringToVisitCard(String enc){
         String[] info = enc.split(";");
-//        if(info.length != 11){//no website field
-//            info = Utils.utils.fillArray(info.length,info,"");
-//        }
+        //fill empty fields in the end with empty strings
+        info = utils.fillArray(info);
         return new Builder().
                              setId(Integer.parseInt(info[0])).
                              setOwner(info[1]).

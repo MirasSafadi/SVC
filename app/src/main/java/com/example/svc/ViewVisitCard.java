@@ -55,9 +55,16 @@ public class ViewVisitCard extends AppCompatActivity {
         website.setText("Website: " + vc.getWebsite());
 
     }
-    //TODO: add back button to Home
 
-    //TODO: add send VC (ultrasound)
+
+
+    public void Delete(View v){
+
+    }
+
+    public void Send(View v){
+
+    }
 
     public void Edit(View v){
         Intent intent = new Intent(this,EditVC.class);
@@ -65,4 +72,5 @@ public class ViewVisitCard extends AppCompatActivity {
         intent.putExtra(Constants.USER,user.toString());
         startActivity(intent);
     }
+
 }
