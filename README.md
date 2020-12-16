@@ -7,3 +7,6 @@
 <p align="center">
   <img src="SVC site map.jpg" align="center">
 </p>
+<p align="center">
+  <img src="./Screenshots of the app/Flow.JPG" align="center">
+</p>

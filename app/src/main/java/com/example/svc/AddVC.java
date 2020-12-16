@@ -67,32 +67,41 @@ public class AddVC extends AppCompatActivity {
                     .show();
             return;
         }
-      
-        if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
-               .setOwner(user.getEmail())
-               .setEmail(email)
-               .setFull_name(full_name)
-               .setPosition_title(position_title)
-               .setCompany(company)
-               .setAddress(address)
-               .setTelephone(telephone)
-               .setFax(fax)
-               .setMobile(mobile)
-               .setWebsite(website)
-               .build(), db)){
-            Intent intent = new Intent(this,Home.class);
-            //putExtra...
-            intent.putExtra(Constants.USER,user.toString());
-            startActivity(intent);
-        }else{
-           //add a condition in the DB that checks if a visit card for this user with THE SAME VALUES FOR ALL FIELDS
+
+        try {
+            if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
+                   .setOwner(user.getEmail())
+                   .setEmail(email)
+                   .setFull_name(full_name)
+                   .setPosition_title(position_title)
+                   .setCompany(company)
+                   .setAddress(address)
+                   .setTelephone(telephone)
+                   .setFax(fax)
+                   .setMobile(mobile)
+                   .setWebsite(website)
+                   .build(), db)){
+                Intent intent = new Intent(this,Home.class);
+                //putExtra...
+                intent.putExtra(Constants.USER,user.toString());
+                startActivity(intent);
+            }else{
+               //add a condition in the DB that checks if a visit card for this user with THE SAME VALUES FOR ALL FIELDS
+                new AlertDialog.Builder(this)
+                        .setTitle("You already have this visit card!")
+                        .setMessage("Please add another visit card with another ID!")
+                        .setNeutralButton("Close", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+            }
+        } catch (IllegalArgumentException e) {
             new AlertDialog.Builder(this)
-                   .setTitle("You already have this visit card!")
-                    .setMessage("Please add another visit card with another ID!")
+                    .setTitle("Mandatory fields missing")
+                    .setMessage("Full name, Position, Company are mandatory fields.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-
         }
     }
 }
