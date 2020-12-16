@@ -6,20 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".Home">
 
+
+    <TextView
+        android:id="@+id/viewpfTV"
+        android:layout_width="108dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="568dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="viewProfile"
+        android:text="view profile"
+        android:textColor="#03A9F4"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/logoutTV"
+        android:layout_width="108dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="568dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="logout"
+        android:text="Logout"
+        android:textColor="#03A9F4"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/welcomeTV"
-        android:layout_width="376dp"
+        android:layout_width="329dp"
         android:layout_height="47dp"
+        android:background="#FFFFFF"
         android:gravity="center"
         android:text="@string/test_text"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintVertical_bias="0.073" />
 
     <Button
         android:id="@+id/addvcBtn"
@@ -45,7 +80,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTV">
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTV"
+        app:layout_constraintVertical_bias="1.0">
 
         <TableLayout
             android:id="@+id/visitCardsTable"

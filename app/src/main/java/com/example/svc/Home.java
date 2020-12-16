@@ -100,6 +100,15 @@ public class Home extends AppCompatActivity {
         }
 
     }
+    public void viewProfile(View v){
+        Intent intent = new Intent(this,ViewProfile.class);
+        intent.putExtra(Constants.USER,user.toString());
+        startActivity(intent);
+    }
+    public void logout(View v){
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
     public void addVC(View v){
         Intent intent = new Intent(this,AddVC.class);
         intent.putExtra(Constants.USER,user.toString());
