@@ -27,5 +27,11 @@ public class UserDAO {
 
         return db.addUser(user);
     }
+    public static boolean resetPassword (UserDTO user, SVCDB db){
+        //do input validation!!
+        //get the vc from the database
+
+        return db.editPassword(user);
+    }
 }
 

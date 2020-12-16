@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ViewVisitCard">
 
-
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="376dp"

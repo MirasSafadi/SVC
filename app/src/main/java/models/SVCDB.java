@@ -192,6 +192,17 @@ public class SVCDB extends SQLiteOpenHelper {
         return update_result != -1;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean editPassword(UserDTO user){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COLUMN_PASSWORD, user.getPassword());
+
+
+        long update_result= db.update(USER_TABLE_NAME, contentValues,"email = ? ", new String[] {user.getEmail()});
+        return update_result != -1;
+    }
+
     public ArrayList<VisitCardDTO> getUserVisitCards(String userEmail){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM visit_card WHERE owner = ?";
