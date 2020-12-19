@@ -1,15 +1,25 @@
 package com.example.svc;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+
+import ReceiverPackage.Receiver;
 import Utils.Constants;
 import models.SVCDB;
 import models.UserDTO;
@@ -102,6 +112,58 @@ public class AddVC extends AppCompatActivity {
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+        }
+    }
+    public void ReceiveVC(View v) {
+        System.out.println("Receiving...");
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 0);
+        }
+        else{
+            Listen();
+        }
+    }
+
+    /**********************************************************************************************
+     * function: Listen
+     * description: function will start when listen/Record start
+     * args:
+     * return: void
+     **********************************************************************************************/
+    private void Listen() {
+        Receiver cReceiver = new Receiver();
+        Integer[] SettingsArr = Utils.SoundSettings.getSettings();
+        try {
+            ArrayList<String> ReceivedMsg = cReceiver.receiveMsg(SettingsArr);
+            String binaryRep = Utils.utils.concatArrayList(ReceivedMsg);
+            String compressed = Utils.utils.binaryToText(binaryRep);
+            String decompressed = Utils.LZString.decompress(compressed);
+            //do whatever...
+            new AlertDialog.Builder(this).setTitle("Received String").setMessage(decompressed).setNeutralButton("OK",null).show();
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**********************************************************************************************
+     * function: onRequestPermissionsResult
+     * description: function to ask for a Record permissions
+     * args: int requestCode, @NonNull String permissions[], @NonNull int[] grantResults
+     * return: void
+     **********************************************************************************************/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 0: {
+                //continue listening when user granted permission on mic
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Listen();
+                }
+                break;
+            }
         }
     }
 }

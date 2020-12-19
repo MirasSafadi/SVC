@@ -21,14 +21,29 @@
 
     <Button
         android:id="@+id/AddvcBtn"
-        android:layout_width="309dp"
-        android:layout_height="56dp"
+        android:layout_width="88dp"
+        android:layout_height="47dp"
         android:onClick="addVc"
         android:text="@string/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.866"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.46" />
+
+    <Button
+        android:id="@+id/ReceiveVCBtn"
+        android:layout_width="204dp"
+        android:layout_height="41dp"
+        android:onClick="ReceiveVC"
+        android:text="@string/recieve_via_sound"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.46" />
 
     <ScrollView
         android:id="@+id/scrollView2"

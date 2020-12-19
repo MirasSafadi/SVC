@@ -1,14 +1,18 @@
 package com.example.svc;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import SenderPackage.Sender;
 import Utils.Constants;
 import models.UserDTO;
 import models.VisitCardDTO;
@@ -63,6 +67,16 @@ public class ViewVisitCard extends AppCompatActivity {
     }
 
     public void Send(View v){
+        String compressedVC = Utils.LZString.compress(vc.toString());
+        String binaryRep = Utils.utils.strToBinary(compressedVC);
+
+        if (!binaryRep.isEmpty() && !binaryRep.equals(" ")) {
+            Sender cSender = new Sender();
+            cSender.setMsg2Send(binaryRep);
+            Integer[] SettingsArr = Utils.SoundSettings.getSettings();
+            cSender.sendMsg(SettingsArr);
+        }
+
 
     }
 
@@ -72,5 +86,4 @@ public class ViewVisitCard extends AppCompatActivity {
         intent.putExtra(Constants.USER,user.toString());
         startActivity(intent);
     }
-
 }
