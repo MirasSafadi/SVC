@@ -43,6 +43,8 @@ public class utils {
                     bin += '0';
                 val /= 2;
             }
+            while(bin.length() < 16)
+                bin += '0';
             bin = reverse(bin);
             binRes.append(bin);
         }
@@ -68,15 +70,15 @@ public class utils {
         for(String st: arrayList){
             sb.append(st);
         }
-        if(sb.length()%8 != 0) sb.append("0000");
+
         return sb.toString();
     }
     public static String binaryToText(String binaryRep){
         StringBuilder sb = new StringBuilder();
         int n = binaryRep.length();
-        for(int i = 0; (i+8) <= n ; i += 8){
-            String asciiCode = binaryRep.substring(i,i+8);
-            int charCode = Integer.parseInt(asciiCode, 2);
+        for(int i = 0; (i+16) <= n ; i += 16){
+            String binCharCode = binaryRep.substring(i,i+16);
+            int charCode = Integer.parseInt(binCharCode, 2);
             String str = new Character((char)charCode).toString();
             sb.append(str);
         }
