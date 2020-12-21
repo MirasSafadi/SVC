@@ -56,18 +56,29 @@ public class SignUp extends AppCompatActivity {
                     .show();
             return;
         }
-        boolean isValid = true;
-        if(!InputValidators.validate(InputValidators.EMAIL,email))
-            isValid = false;
-        if(!InputValidators.validate(InputValidators.NAME,full_name))
-            isValid = false;
-        if(!InputValidators.validate(InputValidators.PASSWORD,password1))
-            isValid = false;
-
-        if(!isValid){
+        if(!InputValidators.validate(InputValidators.EMAIL,email)) {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("One or more of the fields is invalid")
+                    .setMessage("Email field is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+        if(!InputValidators.validate(InputValidators.NAME,full_name)) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Name field is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+        if(!InputValidators.validate(InputValidators.PASSWORD,password1))
+           {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Password field is invalid")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
