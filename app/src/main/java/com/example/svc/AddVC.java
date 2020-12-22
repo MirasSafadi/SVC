@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -54,29 +53,69 @@ public class AddVC extends AppCompatActivity {
 
 
         //check if fields are not empty and validate them with regex if so...
-        boolean isValid = true;
-        if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
-            isValid = false;
-        if(!mobile.isEmpty() && !InputValidators.validate(InputValidators.MOBILE,mobile))
-            isValid = false;
-        if(!telephone.isEmpty() && !InputValidators.validate(InputValidators.TELEPHONE,telephone))
-            isValid = false;
-        if(!email.isEmpty() && !InputValidators.validate(InputValidators.EMAIL,email))
-            isValid = false;
-        if(!fax.isEmpty() && !InputValidators.validate(InputValidators.FAX,fax))
-            isValid = false;
-        if(!website.isEmpty() && !InputValidators.validate(InputValidators.WEBSITE,website))
-            isValid = false;
 
-        if(!isValid){
+        if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
+        {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("One or more of the fields is invalid")
+                    .setMessage("Name field is invalid")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
             return;
         }
+        if(!mobile.isEmpty() && !InputValidators.validate(InputValidators.MOBILE,mobile))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Mobile field is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+        if(!telephone.isEmpty() && !InputValidators.validate(InputValidators.TELEPHONE,telephone))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Telephone field is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+        if(!email.isEmpty() && !InputValidators.validate(InputValidators.EMAIL,email))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Email field is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+        if(!fax.isEmpty() && !InputValidators.validate(InputValidators.FAX,fax))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Fax field is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+        if(!website.isEmpty() && !InputValidators.validate(InputValidators.WEBSITE,website))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Website field is invalid")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
+
 
         try {
             if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
