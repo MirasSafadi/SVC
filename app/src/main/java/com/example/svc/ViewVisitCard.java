@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import SenderPackage.Sender;
 import Utils.Constants;
+import Utils.Smaz;
 import models.UserDTO;
 import models.VisitCardDTO;
 
@@ -67,8 +68,13 @@ public class ViewVisitCard extends AppCompatActivity {
     }
 
     public void Send(View v){
-        String compressedVC = Utils.LZString.compress(vc.toString());
-        String binaryRep = Utils.utils.strToBinary(compressedVC);
+        //if algorithm is Smaz
+        Smaz smaz = new Smaz();
+        byte[] compressedVC = smaz.compress(vc.toString());
+        String binaryRep = Utils.utils.byteArrayToBinary(compressedVC);
+        //if algorithm is LZString
+//        String compressedVC = Utils.LZString.compress(vc.toString());
+//        String binaryRep = Utils.utils.strToBinary(compressedVC);
 
         if (!binaryRep.isEmpty() && !binaryRep.equals(" ")) {
             Sender cSender = new Sender();

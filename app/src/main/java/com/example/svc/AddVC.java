@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import ReceiverPackage.Receiver;
 import Utils.Constants;
+import Utils.Smaz;
 import models.SVCDB;
 import models.UserDTO;
 import models.VisitCardDAO;
@@ -175,8 +176,13 @@ public class AddVC extends AppCompatActivity {
         try {
             ArrayList<String> ReceivedMsg = cReceiver.receiveMsg(SettingsArr);
             String binaryRep = Utils.utils.concatArrayList(ReceivedMsg);
-            String compressed = Utils.utils.binaryToText(binaryRep);
-            String decompressed = Utils.LZString.decompress(compressed);
+            //If Algorithm is Smaz
+            byte[] compressed = Utils.utils.binaryToByteArray(binaryRep);
+            Smaz smaz = new Smaz();
+            String decompressed = smaz.decompress(compressed);
+            //If Algorithm is LZString
+//            String compressed = Utils.utils.binaryToText(binaryRep);
+//            String decompressed = Utils.LZString.decompress(compressed);
             //do whatever...
             new AlertDialog.Builder(this).setTitle("Received String").setMessage(decompressed).setNeutralButton("OK",null).show();
 
