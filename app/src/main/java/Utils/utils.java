@@ -2,6 +2,7 @@ package Utils;
 
 import android.content.Context;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class utils {
@@ -25,20 +26,16 @@ public class utils {
     }
     public static String strToBinary(String s) {
         int n = s.length();
-
         StringBuilder binRes = new StringBuilder("");
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             // convert each char to
             // ASCII value
             int val = Integer.valueOf(s.charAt(i));
-
             // Convert ASCII value to binary
             String bin = "";
             while (val > 0) {
-                if (val % 2 == 1) {
+                if (val % 2 == 1)
                     bin += '1';
-                }
                 else
                     bin += '0';
                 val /= 2;
@@ -46,6 +43,18 @@ public class utils {
             while(bin.length() < 16)
                 bin += '0';
             bin = reverse(bin);
+            binRes.append(bin);
+        }
+        return binRes.toString();
+    }
+
+    public static String byteArrayToBinary(byte[] input) {
+        int n = input.length;
+        StringBuilder binRes = new StringBuilder("");
+        for (int i = 0; i < n; i++) {
+            int val = input[i];
+            // Convert byte to binary
+            String bin = String.format("%8s", Integer.toBinaryString(val & 0xFF)).replace(' ', '0');
             binRes.append(bin);
         }
         return binRes.toString();
@@ -79,11 +88,22 @@ public class utils {
         for(int i = 0; (i+16) <= n ; i += 16){
             String binCharCode = binaryRep.substring(i,i+16);
             int charCode = Integer.parseInt(binCharCode, 2);
-            String str = new Character((char)charCode).toString();
+            String str = Character.valueOf((char)charCode).toString();
             sb.append(str);
         }
         return sb.toString();
     }
+    public static byte[] binaryToByteArray(String binaryRep){
+        int n = binaryRep.length();
+        ByteBuffer bytes = ByteBuffer.allocate(n/8);
+        for(int i = 0; (i+8) <= n ; i += 8){
+            String substring = binaryRep.substring(i,i+8);
+            Short val = Short.valueOf(substring, 2);
+            bytes.put(val.byteValue());
+        }
+        return bytes.array();
+    }
+
 
 
 
