@@ -15,14 +15,14 @@ public class utils {
         return (int) (dp * context.getResources().getDisplayMetrics().density);
     }
     public static String[] fillArray(String arr[]) {
-        String newarr[] = new String[11];
+        String newArr[] = new String[14];
         int i = 0;
         for (; i < arr.length; i++)
-            newarr[i] = arr[i];
-        for(;i<11;i++)
-            newarr[i] = "";
+            newArr[i] = arr[i];
+        for(;i<14;i++)
+            newArr[i] = "";
 
-        return newarr;
+        return newArr;
     }
     public static String strToBinary(String s) {
         int n = s.length();

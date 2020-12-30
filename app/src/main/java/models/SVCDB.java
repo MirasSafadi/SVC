@@ -26,7 +26,10 @@ public class SVCDB extends SQLiteOpenHelper {
     public static final String VC_COLUMN_ID = "id";
     public static final String VC_COLUMN_OWNER = "owner";
     public static final String VC_COLUMN_EMAIL = "email";
-    public static final String VC_COLUMN_FULL_NAME = "full_name";
+    public static final String VC_COLUMN_PREFIX = "prefix";
+    public static final String VC_COLUMN_FIRST_NAME = "first_name";
+    public static final String VC_COLUMN_MIDDLE_NAME = "middle_name";
+    public static final String VC_COLUMN_LAST_NAME = "last_name";
     public static final String VC_COLUMN_POSITION_TITLE = "position_title";
     public static final String VC_COLUMN_COMPANY = "company";
     public static final String VC_COLUMN_ADDRESS = "address";
@@ -55,9 +58,12 @@ public class SVCDB extends SQLiteOpenHelper {
                 "CREATE TABLE `visit_card` (" +
                         "  `id` INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                         "  `owner` VARCHAR(255), " +
-                        "  `email` VARCHAR(255), " +
-                        "  `full_name` VARCHAR(255), " +
-                        "  `position_title` VARCHAR(255), " +
+                        "  `email` VARCHAR(255) UNIQUE, " +
+                        "  `prefix` VARCHAR(255), " +
+                        "  `first_name` VARCHAR(255) UNIQUE, " +
+                        "  `middle_name` VARCHAR(255), " +
+                        "  `last_name` VARCHAR(255) UNIQUE, " +
+                        "  `position_title` VARCHAR(255) , " +
                         "  `company` VARCHAR(255), " +
                         "  `address` VARCHAR(255), " +
                         "  `telephone` VARCHAR(15), " +
@@ -79,6 +85,7 @@ public class SVCDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS visit_card");
         onCreate(db);
     }
+
     //user related methods
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public UserDTO getUser(String email){
@@ -114,9 +121,18 @@ public class SVCDB extends SQLiteOpenHelper {
         return db.delete(USER_TABLE_NAME, "email = ? ", new String[] { email}) == 1;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean editPassword(UserDTO user){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COLUMN_PASSWORD, user.getPassword());
+
+
+        long update_result= db.update(USER_TABLE_NAME, contentValues,"email = ? ", new String[] {user.getEmail()});
+        return update_result != -1;
+    }
 
     //Visit card related methods
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public VisitCardDTO getVC(int id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -126,7 +142,10 @@ public class SVCDB extends SQLiteOpenHelper {
             int vc_id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
             String owner = cursor.getString(cursor.getColumnIndex(VC_COLUMN_OWNER));
             String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
-            String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
+            String prefix = cursor.getString(cursor.getColumnIndex(VC_COLUMN_PREFIX));
+            String first_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FIRST_NAME));
+            String middle_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MIDDLE_NAME));
+            String last_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_LAST_NAME));
             String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));
             String company = cursor.getString(cursor.getColumnIndex(VC_COLUMN_COMPANY));
             String address = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ADDRESS));
@@ -139,7 +158,10 @@ public class SVCDB extends SQLiteOpenHelper {
                     setId(vc_id).
                     setOwner(owner).
                     setEmail(email).
-                    setFull_name(full_name).
+                    setPrefix(prefix).
+                    setFirst_name(first_name).
+                    setMiddle_name(middle_name).
+                    setLast_name(last_name).
                     setPosition_title(position_title).
                     setCompany(company).
                     setAddress(address).
@@ -159,7 +181,10 @@ public class SVCDB extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
         contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
-        contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
+        contentValues.put(VC_COLUMN_PREFIX, vc.getPrefix());
+        contentValues.put(VC_COLUMN_FIRST_NAME, vc.getFirst_name());
+        contentValues.put(VC_COLUMN_MIDDLE_NAME, vc.getMiddle_name());
+        contentValues.put(VC_COLUMN_LAST_NAME, vc.getLast_name());
         contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getPosition_title());
         contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
         contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
@@ -179,7 +204,10 @@ public class SVCDB extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
         contentValues.put(VC_COLUMN_EMAIL, vc.getEmail());
-        contentValues.put(VC_COLUMN_FULL_NAME, vc.getFull_name());
+        contentValues.put(VC_COLUMN_PREFIX, vc.getPrefix());
+        contentValues.put(VC_COLUMN_FIRST_NAME, vc.getFirst_name());
+        contentValues.put(VC_COLUMN_MIDDLE_NAME, vc.getMiddle_name());
+        contentValues.put(VC_COLUMN_LAST_NAME, vc.getLast_name());
         contentValues.put(VC_COLUMN_POSITION_TITLE, vc.getPosition_title());
         contentValues.put(VC_COLUMN_COMPANY, vc.getCompany());
         contentValues.put(VC_COLUMN_ADDRESS, vc.getAddress());
@@ -192,16 +220,7 @@ public class SVCDB extends SQLiteOpenHelper {
         return update_result != -1;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public boolean editPassword(UserDTO user){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(USER_COLUMN_PASSWORD, user.getPassword());
 
-
-        long update_result= db.update(USER_TABLE_NAME, contentValues,"email = ? ", new String[] {user.getEmail()});
-        return update_result != -1;
-    }
 
     public ArrayList<VisitCardDTO> getUserVisitCards(String userEmail){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -214,7 +233,10 @@ public class SVCDB extends SQLiteOpenHelper {
             int id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
             System.out.println(id);
             String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
-            String full_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FULL_NAME));
+            String prefix = cursor.getString(cursor.getColumnIndex(VC_COLUMN_PREFIX));
+            String first_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FIRST_NAME));
+            String middle_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MIDDLE_NAME));
+            String last_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_LAST_NAME));
             String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));
             String company = cursor.getString(cursor.getColumnIndex(VC_COLUMN_COMPANY));
             String address = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ADDRESS));
@@ -228,7 +250,10 @@ public class SVCDB extends SQLiteOpenHelper {
                                             setId(id).
                                             setOwner(userEmail).
                                             setEmail(email).
-                                            setFull_name(full_name).
+                                            setPrefix(prefix).
+                                            setFirst_name(first_name).
+                                            setMiddle_name(middle_name).
+                                            setLast_name(last_name).
                                             setPosition_title(position_title).
                                             setCompany(company).
                                             setAddress(address).

@@ -1,12 +1,9 @@
 package com.example.svc;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -36,7 +33,7 @@ public class ViewVisitCard extends AppCompatActivity {
         email.setText("Email: " + vc.getEmail());
 
         TextView full_name = (TextView) findViewById(R.id.full_nameTextView);
-        full_name.setText("Full Name: " + vc.getFull_name());
+        full_name.setText("Full Name: " + vc.getFirst_name());
 
         TextView position_title = (TextView) findViewById(R.id.positionTextView);
         position_title.setText("Position: " + vc.getPosition_title());
@@ -70,7 +67,7 @@ public class ViewVisitCard extends AppCompatActivity {
     public void Send(View v){
         //if algorithm is Smaz
         Smaz smaz = new Smaz();
-        byte[] compressedVC = smaz.compress(vc.toString());
+        byte[] compressedVC = smaz.compress(vc.prepareForCompression());
         String binaryRep = Utils.utils.byteArrayToBinary(compressedVC);
         //if algorithm is LZString
 //        String compressedVC = Utils.LZString.compress(vc.toString());
@@ -80,6 +77,7 @@ public class ViewVisitCard extends AppCompatActivity {
             Sender cSender = new Sender();
             cSender.setMsg2Send(binaryRep);
             Integer[] SettingsArr = Utils.SoundSettings.getSettings();
+            //TODO Rani: add Alert with progress bar
             cSender.sendMsg(SettingsArr);
         }
 
