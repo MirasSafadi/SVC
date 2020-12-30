@@ -6,7 +6,10 @@ public class VisitCardDTO {
     private int id;
     private String owner;
     private String email;
-    private String full_name;
+    private String prefix;
+    private String first_name;
+    private String middle_name;
+    private String last_name;
     private String position_title;
     private String company;
     private String address;
@@ -19,7 +22,10 @@ public class VisitCardDTO {
         this.id = builder.id;
         this.owner = builder.owner;
         this.email = builder.email;
-        this.full_name = builder.full_name;
+        this.prefix = builder.prefix;
+        this.first_name = builder.first_name;
+        this.middle_name = builder.middle_name;
+        this.last_name = builder.last_name;
         this.position_title = builder.position_title;
         this.company = builder.company;
         this.address = builder.address;
@@ -33,7 +39,10 @@ public class VisitCardDTO {
         private int id;
         private String owner;
         private String email;
-        private String full_name;
+        private String prefix;
+        private String first_name;
+        private String middle_name;
+        private String last_name;
         private String position_title;
         private String company;
         private String address;
@@ -47,17 +56,32 @@ public class VisitCardDTO {
             this.id = id;
             return this;
         }
-        public Builder setOwner(String owner) {
+        public Builder setOwner(String owner) throws IllegalArgumentException {
+            if(owner.isEmpty()) throw new IllegalArgumentException("Visit Card must have owner");
             this.owner = owner;
             return this;
         }
-        public Builder setEmail(String email) {
+        public Builder setEmail(String email) throws IllegalArgumentException {
+            if(email.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
             this.email = email;
             return this;
         }
-        public Builder setFull_name(String full_name) throws IllegalArgumentException{
-            if(full_name.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
-            this.full_name = full_name;
+        public Builder setPrefix(String prefix){
+            this.prefix = prefix;
+            return this;
+        }
+        public Builder setFirst_name(String first_name) throws IllegalArgumentException {
+            if(first_name.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
+            this.first_name = first_name;
+            return this;
+        }
+        public Builder setMiddle_name(String middle_name){
+            this.middle_name = middle_name;
+            return this;
+        }
+        public Builder setLast_name(String last_name) throws IllegalArgumentException {
+            if(last_name.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
+            this.last_name = last_name;
             return this;
         }
         public Builder setPosition_title(String position_title) throws IllegalArgumentException{
@@ -71,12 +95,14 @@ public class VisitCardDTO {
             return this;
         }
 
-        public Builder setAddress(String address) {
+        public Builder setAddress(String address) throws IllegalArgumentException {
+            if(address.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
             this.address = address;
             return this;
         }
 
-        public Builder setTelephone(String telephone) {
+        public Builder setTelephone(String telephone) throws IllegalArgumentException {
+            if(telephone.isEmpty()) throw new IllegalArgumentException("This field is mandatory");
             this.telephone = telephone;
             return this;
         }
@@ -105,9 +131,12 @@ public class VisitCardDTO {
         return owner;
     }
     public String getEmail() { return email; }
-    public String getFull_name() {
-        return full_name;
+    public String getPrefix() { return prefix; }
+    public String getFirst_name() {
+        return first_name;
     }
+    public String getMiddle_name() { return middle_name; }
+    public String getLast_name() { return last_name; }
     public String getPosition_title() { return position_title; }
     public String getCompany() { return company; }
     public String getAddress() { return address; }
@@ -118,14 +147,16 @@ public class VisitCardDTO {
     public String getMobile() { return mobile; }
     public String getWebsite() { return website; }
 
-
     //=======================================================================================
 
 
 
     @Override
     public String toString() {
-        return String.format("%d;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",this.id,this.owner,this.email,this.full_name,this.position_title,this.company,this.address,this.telephone,this.fax,this.mobile,this.website);
+        return String.format("%d;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",this.id,this.owner,this.email,this.prefix,this.first_name,this.middle_name,this.last_name,this.position_title,this.company,this.address,this.telephone,this.fax,this.mobile,this.website);
+    }
+    public String prepareForCompression(){
+        return String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s",this.email,this.prefix,this.first_name,this.middle_name,this.last_name,this.position_title,this.company,this.address,this.telephone,this.fax,this.mobile,this.website);
     }
 
 
@@ -134,17 +165,39 @@ public class VisitCardDTO {
         //fill empty fields in the end with empty strings
         info = utils.fillArray(info);
         return new Builder().
-                             setId(Integer.parseInt(info[0])).
-                             setOwner(info[1]).
-                             setEmail(info[2]).
-                             setFull_name(info[3]).
-                             setPosition_title(info[4]).
-                             setCompany(info[5]).
-                             setAddress(info[6]).
-                             setTelephone(info[7]).
-                             setFax(info[8]).
-                             setMobile(info[9]).
-                             setWebsite(info[10]).
-                             build();
+                            setId(Integer.parseInt(info[0])).
+                            setOwner(info[1]).
+                            setEmail(info[2]).
+                            setPrefix(info[3]).
+                            setFirst_name(info[4]).
+                            setMiddle_name(info[5]).
+                            setLast_name(info[6]).
+                            setPosition_title(info[7]).
+                            setCompany(info[8]).
+                            setAddress(info[9]).
+                            setTelephone(info[10]).
+                            setFax(info[11]).
+                            setMobile(info[12]).
+                            setWebsite(info[13]).
+                            build();
+    }
+    public static VisitCardDTO receiveVisitCard(String enc){
+        String[] info = enc.split(";");
+        //fill empty fields in the end with empty strings
+        info = utils.fillArray(info);
+        return new Builder().
+                setEmail(info[2]).
+                setPrefix(info[3]).
+                setFirst_name(info[4]).
+                setMiddle_name(info[5]).
+                setLast_name(info[6]).
+                setPosition_title(info[7]).
+                setCompany(info[8]).
+                setAddress(info[9]).
+                setTelephone(info[10]).
+                setFax(info[11]).
+                setMobile(info[12]).
+                setWebsite(info[13]).
+                build();
     }
 }

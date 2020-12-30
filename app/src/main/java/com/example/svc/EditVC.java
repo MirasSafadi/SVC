@@ -38,7 +38,7 @@ public class EditVC extends AppCompatActivity {
         email.setText(vc.getEmail());
 
         EditText full_name = (EditText) findViewById(R.id.enameTF);
-        full_name.setText(vc.getFull_name());
+        full_name.setText(vc.getFirst_name());
 
         EditText position_title = (EditText) findViewById(R.id.epositionTF);
         position_title.setText(vc.getPosition_title());
@@ -63,7 +63,10 @@ public class EditVC extends AppCompatActivity {
 
     }
     public void editVC(View v){
-        String full_name = ((EditText) findViewById(R.id.enameTF)).getText().toString();
+        String prefix = "";
+        String first_name = "";
+        String middle_name = "";
+        String last_name = "";
         String mobile = ((EditText) findViewById(R.id.emobileTF)).getText().toString();
         String company = ((EditText) findViewById(R.id.ecompanyTF)).getText().toString();
         String telephone = ((EditText) findViewById(R.id.etelephoneTF)).getText().toString();
@@ -74,7 +77,8 @@ public class EditVC extends AppCompatActivity {
         String address = ((EditText) findViewById(R.id.eaddressTF)).getText().toString();
 
         //check if fields are not empty and validate them with regex if so...
-        if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
+        //TODO Rani: check if mandatory fields are empty and if they are valid.
+        if(!first_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,first_name))
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
@@ -84,6 +88,9 @@ public class EditVC extends AppCompatActivity {
                     .show();
             return;
         }
+        //TODO: Add checks for prefix, middle name and last name.
+        //...
+        //
         if(!mobile.isEmpty() && !InputValidators.validate(InputValidators.MOBILE,mobile))
         {
             new AlertDialog.Builder(this)
@@ -139,7 +146,10 @@ public class EditVC extends AppCompatActivity {
         if(VisitCardDAO.editVC(new VisitCardDTO.Builder()
                 .setEmail(email)
                 .setOwner(vc.getOwner())
-                .setFull_name(full_name)
+                .setPrefix(prefix)
+                .setFirst_name(first_name)
+                .setMiddle_name(middle_name)
+                .setLast_name(last_name)
                 .setPosition_title(position_title)
                 .setCompany(company)
                 .setAddress(address)

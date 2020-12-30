@@ -2,10 +2,13 @@ package com.example.svc;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 
@@ -42,7 +45,10 @@ public class AddVC extends AppCompatActivity {
     }
 
     public void addVc(View v){
-        String full_name = ((EditText) findViewById(R.id.nameTF)).getText().toString();
+        String prefix = "";
+        String first_name = "";
+        String middle_name = "";
+        String last_name = "";
         String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
         String company = ((EditText) findViewById(R.id.companyTF)).getText().toString();
         String telephone = ((EditText) findViewById(R.id.telephoneTF)).getText().toString();
@@ -55,7 +61,7 @@ public class AddVC extends AppCompatActivity {
 
         //check if fields are not empty and validate them with regex if so...
 
-        if(!full_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,full_name))
+        if(!first_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,first_name))
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
@@ -122,7 +128,10 @@ public class AddVC extends AppCompatActivity {
             if(VisitCardDAO.addVC(new VisitCardDTO.Builder()
                    .setOwner(user.getEmail())
                    .setEmail(email)
-                   .setFull_name(full_name)
+                    .setPrefix(prefix)
+                    .setFirst_name(first_name)
+                    .setMiddle_name(middle_name)
+                    .setLast_name(last_name)
                    .setPosition_title(position_title)
                    .setCompany(company)
                    .setAddress(address)
@@ -153,6 +162,21 @@ public class AddVC extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
+        //save contact in phone book..
+        saveInPhoneBook(new VisitCardDTO.Builder()
+                .setEmail(email)
+                .setPrefix(prefix)
+                .setFirst_name(first_name)
+                .setMiddle_name(middle_name)
+                .setLast_name(last_name)
+                .setPosition_title(position_title)
+                .setCompany(company)
+                .setAddress(address)
+                .setTelephone(telephone)
+                .setFax(fax)
+                .setMobile(mobile)
+                .setWebsite(website)
+                .build());
     }
     public void ReceiveVC(View v) {
         System.out.println("Receiving...");
@@ -161,7 +185,44 @@ public class AddVC extends AppCompatActivity {
         }
         else{
             Listen();
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CONTACTS}, 0);
+            }
+            else{
+                //get the values from the text fields, create a VC and save it phone book
+                String prefix = "";
+                String first_name = "";
+                String middle_name = "";
+                String last_name = "";
+                String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
+                String company = ((EditText) findViewById(R.id.companyTF)).getText().toString();
+                String telephone = ((EditText) findViewById(R.id.telephoneTF)).getText().toString();
+                String email = ((EditText) findViewById(R.id.emailET)).getText().toString();
+                String fax = ((EditText) findViewById(R.id.faxTF)).getText().toString();
+                String position_title = ((EditText) findViewById(R.id.positionTF)).getText().toString();
+                String website = ((EditText) findViewById(R.id.websiteTF)).getText().toString();
+                String address = ((EditText) findViewById(R.id.addressTF)).getText().toString();
+
+                //save contact in phone book..
+                saveInPhoneBook(new VisitCardDTO.Builder()
+                        .setEmail(email)
+                        .setPrefix(prefix)
+                        .setFirst_name(first_name)
+                        .setMiddle_name(middle_name)
+                        .setLast_name(last_name)
+                        .setPosition_title(position_title)
+                        .setCompany(company)
+                        .setAddress(address)
+                        .setTelephone(telephone)
+                        .setFax(fax)
+                        .setMobile(mobile)
+                        .setWebsite(website)
+                        .build());
+
+            }
         }
+
     }
 
     /**********************************************************************************************
@@ -184,7 +245,18 @@ public class AddVC extends AppCompatActivity {
 //            String compressed = Utils.utils.binaryToText(binaryRep);
 //            String decompressed = Utils.LZString.decompress(compressed);
             //do whatever...
+            //fill in the text fields...
             new AlertDialog.Builder(this).setTitle("Received String").setMessage(decompressed).setNeutralButton("OK",null).show();
+            VisitCardDTO receivedVC = VisitCardDTO.receiveVisitCard(decompressed);
+            //TODO Rani: do the same for the 4 name TF's after you add them..
+            ((EditText) findViewById(R.id.mobileTF)).setText(receivedVC.getMobile());
+            ((EditText) findViewById(R.id.companyTF)).setText(receivedVC.getCompany());
+            ((EditText) findViewById(R.id.telephoneTF)).setText(receivedVC.getTelephone());
+            ((EditText) findViewById(R.id.emailET)).setText(receivedVC.getEmail());
+            ((EditText) findViewById(R.id.faxTF)).setText(receivedVC.getFax());
+            ((EditText) findViewById(R.id.positionTF)).setText(receivedVC.getPosition_title());
+            ((EditText) findViewById(R.id.websiteTF)).setText(receivedVC.getWebsite());
+            ((EditText) findViewById(R.id.addressTF)).setText(receivedVC.getAddress());
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -209,6 +281,76 @@ public class AddVC extends AppCompatActivity {
                 }
                 break;
             }
+        }
+    }
+
+    private void saveInPhoneBook(VisitCardDTO vc){
+        ArrayList<ContentProviderOperation> contact = new ArrayList<ContentProviderOperation>();
+        contact.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build());
+
+        // prefix, first, middle and last name
+        contact.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.RawContacts.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.RawContacts.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.PREFIX, vc.getPrefix())
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, vc.getFirst_name())
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.MIDDLE_NAME, vc.getMiddle_name())
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME, vc.getLast_name())
+                .build());
+
+        // company, position, and address
+        contact.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.RawContacts.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.RawContacts.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Organization.TITLE,vc.getPosition_title())
+                .withValue(ContactsContract.CommonDataKinds.Organization.COMPANY, vc.getCompany())
+                .withValue(ContactsContract.CommonDataKinds.Organization.OFFICE_LOCATION, vc.getAddress())
+                .build());
+
+        // Mobile number
+        contact.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.RawContacts.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, vc.getMobile())
+                .build());
+
+        // Telephone
+        contact.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.RawContacts.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, vc.getTelephone())
+                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_WORK)
+                .build());
+        // Fax
+        contact.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.RawContacts.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, vc.getFax())
+                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_FAX_WORK)
+                .build());
+
+        // Email
+        contact.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.RawContacts.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Email.DATA, vc.getEmail())
+                .withValue(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                .build());
+        // Website
+        contact.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.RawContacts.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Website.URL, vc.getWebsite())
+                .build());
+
+        try {
+            ContentProviderResult[] results = getContentResolver().applyBatch(ContactsContract.AUTHORITY, contact);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

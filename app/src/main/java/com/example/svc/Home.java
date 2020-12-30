@@ -62,7 +62,7 @@ public class Home extends AppCompatActivity {
 
             //set the views
             TextView full_name = new TextView(this);
-            full_name.setText(vc.getFull_name());
+            full_name.setText(vc.getFirst_name());
             lp.setMargins(utils.pxFromDp(this,8),0,utils.pxFromDp(this,16),0);
             row.addView(full_name,lp);
 

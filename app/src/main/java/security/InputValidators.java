@@ -14,13 +14,16 @@ public class InputValidators {
 
 
     //for user model
-    private static final Pattern nameRegex = Pattern.compile("^[a-z ]+[^0-9]$",Pattern.CASE_INSENSITIVE); //works
-    private static final Pattern passwordRegex = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,20}$");//works
+    private static final Pattern nameRegex = Pattern.compile("^[a-z]+[^0-9]$",Pattern.CASE_INSENSITIVE); // name must contain only english characters
+    private static final Pattern passwordRegex = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$"); // Password must be at least 8 characters long and contain at least 1 digit, 1 small case letter, and 1 upper case letter.
     private static final Pattern emailRegex = Pattern.compile("^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])$",Pattern.CASE_INSENSITIVE);//works
+    //email is invalid
+    //=====================================================================================
     //for visit card model
-    private static final Pattern mobileRegex = Pattern.compile("^([05].)(\\d{1})(\\d{7})$"); //matches Israeli mobile numbers //works
-    private static final Pattern telephone_faxRegex = Pattern.compile("^([02,03,04,08,09].)(\\d{7})$");//works
-    private static final Pattern websiteRegex = Pattern.compile("^(https?:\\/\\/)?(www\\.)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)|(https?:\\/\\/)?(www\\.)?(?!ww)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)$",Pattern.CASE_INSENSITIVE);//works
+    private static final Pattern mobileRegex = Pattern.compile("^([05].)(\\d{1})(\\d{7})$"); //mobile phone number must start with 05 and contain 10 digits in total.
+    private static final Pattern telephone_faxRegex = Pattern.compile("^([02,03,04,08,09].)(\\d{7})$"); //telephone number must start with 02,03,04,08 or 09 and contain 9 digits in total.
+    private static final Pattern websiteRegex = Pattern.compile("^(https?:\\/\\/)?(www\\.)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)|(https?:\\/\\/)?(www\\.)?(?!ww)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)$",Pattern.CASE_INSENSITIVE);
+    //website is invalid
 
     public static boolean validate(String type, String value){
         Matcher matcher;

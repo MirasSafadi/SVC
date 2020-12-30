@@ -50,7 +50,7 @@ public class SignUp extends AppCompatActivity {
         if(!password1.equals(password2)) {
             new AlertDialog.Builder(this)
                     .setTitle("Passwords do not match")
-                    .setMessage("Please recheck the passwords and make sure they match")
+                    .setMessage("Please re-check the password fields.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -78,7 +78,7 @@ public class SignUp extends AppCompatActivity {
            {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Password field is invalid")
+                    .setMessage("Password must be at least 8 characters long and contain at least 1 digit, 1 small case letter, and 1 upper case letter.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
