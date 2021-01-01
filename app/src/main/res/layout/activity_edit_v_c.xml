@@ -50,12 +50,46 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/enameTF"
+                android:id="@+id/eprenameTF"
                 android:layout_width="329dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Full Name"
+                android:hint="Prefix"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+            <EditText
+                android:id="@+id/efnameTF"
+                android:layout_width="329dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="First Name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+            <EditText
+                android:id="@+id/emnameTF"
+                android:layout_width="329dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Middle Name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"/>
+
+            <EditText
+                android:id="@+id/elnameTF"
+                android:layout_width="329dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Last Name"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
                 android:layout_marginTop="10dp"
