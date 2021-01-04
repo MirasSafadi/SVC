@@ -1,5 +1,6 @@
 package com.example.svc;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,11 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import SenderPackage.Sender;
 import Utils.Constants;
 import Utils.Smaz;
+import models.SVCDB;
 import models.UserDTO;
+import models.VisitCardDAO;
 import models.VisitCardDTO;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class ViewVisitCard extends AppCompatActivity {
+    private SVCDB db;
     private VisitCardDTO vc;
     private UserDTO user;
 
@@ -24,6 +28,7 @@ public class ViewVisitCard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_visit_card);
+        db = new SVCDB(this);
 
         Intent intent = getIntent();
         vc = VisitCardDTO.stringToVisitCard(intent.getStringExtra(Constants.VC_DATA));
@@ -61,7 +66,21 @@ public class ViewVisitCard extends AppCompatActivity {
 
 
     public void Delete(View v){
+        if(VisitCardDAO.deleteVC( vc.getEmail(),vc.getFirst_name(),vc.getLast_name(),db)){
+            Intent intent = new Intent(this,Home.class);
+            //putExtra
+            intent.putExtra(Constants.USER,user.toString());
+            startActivity(intent);
+        }else{
+            //TODO: check if the visit card exists by comparing all the values not by ID
+            new AlertDialog.Builder(this)
+                    .setTitle("This visit card hasn't deleted.")
+                    .setMessage("Please try again!")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
 
+        }
     }
 
     public void Send(View v){

@@ -37,8 +37,17 @@ public class EditVC extends AppCompatActivity {
         EditText email = (EditText) findViewById(R.id.eemailET);
         email.setText(vc.getEmail());
 
-        EditText full_name = (EditText) findViewById(R.id.enameTF);
-        full_name.setText(vc.getFirst_name());
+        EditText prefix = (EditText) findViewById(R.id.eprenameTF);
+        prefix.setText(vc.getPrefix());
+
+        EditText first_name = (EditText) findViewById(R.id.efnameTF);
+        first_name.setText(vc.getFirst_name());
+
+        EditText middle_name = (EditText) findViewById(R.id.emnameTF);
+        middle_name.setText(vc.getMiddle_name());
+
+        EditText last_name = (EditText) findViewById(R.id.elnameTF);
+        last_name.setText(vc.getLast_name());
 
         EditText position_title = (EditText) findViewById(R.id.epositionTF);
         position_title.setText(vc.getPosition_title());
@@ -63,10 +72,10 @@ public class EditVC extends AppCompatActivity {
 
     }
     public void editVC(View v){
-        String prefix = "";
-        String first_name = "";
-        String middle_name = "";
-        String last_name = "";
+        String prefix = ((EditText) findViewById(R.id.eprenameTF)).getText().toString();
+        String first_name = ((EditText) findViewById(R.id.efnameTF)).getText().toString();
+        String middle_name = ((EditText) findViewById(R.id.emnameTF)).getText().toString();
+        String last_name = ((EditText) findViewById(R.id.elnameTF)).getText().toString();
         String mobile = ((EditText) findViewById(R.id.emobileTF)).getText().toString();
         String company = ((EditText) findViewById(R.id.ecompanyTF)).getText().toString();
         String telephone = ((EditText) findViewById(R.id.etelephoneTF)).getText().toString();
@@ -77,25 +86,43 @@ public class EditVC extends AppCompatActivity {
         String address = ((EditText) findViewById(R.id.eaddressTF)).getText().toString();
 
         //check if fields are not empty and validate them with regex if so...
-        //TODO Rani: check if mandatory fields are empty and if they are valid.
         if(!first_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,first_name))
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Name field is invalid")
+                    .setMessage("First name must contain only english characters")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
             return;
         }
-        //TODO: Add checks for prefix, middle name and last name.
-        //...
-        //
+
+        if(!middle_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,middle_name))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Middle name must contain only english characters")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
+        if(!last_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,last_name))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Last name must contain only english characters")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
         if(!mobile.isEmpty() && !InputValidators.validate(InputValidators.MOBILE,mobile))
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Mobile field is invalid")
+                    .setMessage("Mobile phone number must start with 05 and contain 10 digits in total.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -105,7 +132,7 @@ public class EditVC extends AppCompatActivity {
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Telephone field is invalid")
+                    .setMessage("Telephone number must start with 02,03,04,08 or 09 and contain 9 digits in total.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -125,7 +152,7 @@ public class EditVC extends AppCompatActivity {
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Fax field is invalid")
+                    .setMessage("Fax number must start with 02,03,04,08 or 09 and contain 9 digits in total.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -141,6 +168,7 @@ public class EditVC extends AppCompatActivity {
                     .show();
             return;
         }
+
 
         try {
         if(VisitCardDAO.editVC(new VisitCardDTO.Builder()
@@ -175,7 +203,7 @@ public class EditVC extends AppCompatActivity {
         } catch (IllegalArgumentException e) {
             new AlertDialog.Builder(this)
                     .setTitle("Mandatory fields missing")
-                    .setMessage("Full name, Position, Company are mandatory fields.")
+                    .setMessage("First name, Last name, Email, Position, Address, Telephone, Company are mandatory fields.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();

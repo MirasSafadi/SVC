@@ -45,10 +45,10 @@ public class AddVC extends AppCompatActivity {
     }
 
     public void addVc(View v){
-        String prefix = "";
-        String first_name = "";
-        String middle_name = "";
-        String last_name = "";
+        String prefix = ((EditText) findViewById(R.id.prenameTF)).getText().toString();
+        String first_name = ((EditText) findViewById(R.id.fnameTF)).getText().toString();
+        String middle_name = ((EditText) findViewById(R.id.mnameTF)).getText().toString();
+        String last_name = ((EditText) findViewById(R.id.lnameTF)).getText().toString();
         String mobile = ((EditText) findViewById(R.id.mobileTF)).getText().toString();
         String company = ((EditText) findViewById(R.id.companyTF)).getText().toString();
         String telephone = ((EditText) findViewById(R.id.telephoneTF)).getText().toString();
@@ -65,7 +65,29 @@ public class AddVC extends AppCompatActivity {
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Name field is invalid")
+                    .setMessage("First name must contain only english characters")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
+        if(!middle_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,middle_name))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Middle name must contain only english characters")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
+        if(!last_name.isEmpty() && !InputValidators.validate(InputValidators.NAME,last_name))
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid input")
+                    .setMessage("Last name must contain only english characters")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -75,7 +97,7 @@ public class AddVC extends AppCompatActivity {
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Mobile field is invalid")
+                    .setMessage("Mobile phone number must start with 05 and contain 10 digits in total.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -85,7 +107,7 @@ public class AddVC extends AppCompatActivity {
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Telephone field is invalid")
+                    .setMessage("Telephone number must start with 02,03,04,08 or 09 and contain 9 digits in total.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -105,7 +127,7 @@ public class AddVC extends AppCompatActivity {
         {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Fax field is invalid")
+                    .setMessage("Fax number must start with 02,03,04,08 or 09 and contain 9 digits in total.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -157,7 +179,7 @@ public class AddVC extends AppCompatActivity {
         } catch (IllegalArgumentException e) {
             new AlertDialog.Builder(this)
                     .setTitle("Mandatory fields missing")
-                    .setMessage("Full name, Position, Company are mandatory fields.")
+                    .setMessage("First name, Last name, Email, Position, Address, Telephone, Company are mandatory fields.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();

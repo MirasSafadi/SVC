@@ -19,6 +19,7 @@ public class VisitCardDAO {
         System.out.println(vc.getPosition_title());
         return db.addVC(vc);
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static boolean editVC (VisitCardDTO vc, SVCDB db){
         //do input validation!!
@@ -27,4 +28,8 @@ public class VisitCardDAO {
         return db.editVC(vc);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static boolean deleteVC (String email, String first_name, String last_name, SVCDB db){
+        return db.deleteVC(email,first_name,last_name);
+    }
 }

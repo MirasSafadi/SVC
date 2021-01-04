@@ -68,7 +68,7 @@ public class SignUp extends AppCompatActivity {
         if(!InputValidators.validate(InputValidators.NAME,full_name)) {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("Name field is invalid")
+                    .setMessage("Name must contain only english characters")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();

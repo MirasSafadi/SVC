@@ -220,6 +220,15 @@ public class SVCDB extends SQLiteOpenHelper {
         return update_result != -1;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean deleteVC(String email, String first_name, String last_name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long delete_result= db.delete(VC_TABLE_NAME,
+                VC_COLUMN_EMAIL + " = ? AND " + VC_COLUMN_FIRST_NAME + " = ? AND " + VC_COLUMN_LAST_NAME + " = ?",
+                new String[] { email,first_name,last_name });
+        return delete_result != -1;
+    }
+
 
 
     public ArrayList<VisitCardDTO> getUserVisitCards(String userEmail){
