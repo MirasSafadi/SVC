@@ -1,5 +1,8 @@
 package Utils;
 
+/**
+ * Miscellaneous Constants.
+ */
 public class Constants {
     //intent extra keys...
     public final static String USER = "com.example.svc.USER";

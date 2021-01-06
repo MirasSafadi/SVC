@@ -6,14 +6,32 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class utils {
-
+    /**
+     * converts px to dp units
+     * @param context The activity context.
+     * @param px the px units to convert
+     * @return the corresponding dp units.
+     */
     public static int dpFromPx(final Context context, final float px) {
         return (int) (px / context.getResources().getDisplayMetrics().density);
     }
 
+    /**
+     * converts dp to px units.
+     * @param context The activity context.
+     * @param dp the dp units to convert
+     * @return the corresponding px units.
+     */
     public static int pxFromDp(final Context context, final float dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density);
     }
+
+    /**
+     * fills the string array with trailing empty strings. <br/>
+     * <em style="color: red" >used only with converting a string to a visit card object!!</em>
+     * @param arr The array to fill
+     * @return A new array of size 14 with trailing empty strings
+     */
     public static String[] fillArray(String arr[]) {
         String newArr[] = new String[14];
         int i = 0;
@@ -24,6 +42,12 @@ public class utils {
 
         return newArr;
     }
+
+    /**
+     * converts a string to its' binary representation.
+     * @param s The string to convert
+     * @return The binary representation of <i>s</i>.
+     */
     public static String strToBinary(String s) {
         int n = s.length();
         StringBuilder binRes = new StringBuilder("");
@@ -48,6 +72,11 @@ public class utils {
         return binRes.toString();
     }
 
+    /**
+     * converts a byte array to its' binary representation
+     * @param input The byte array to convert
+     * @return The binary representation of <i>input</i>.
+     */
     public static String byteArrayToBinary(byte[] input) {
         int n = input.length;
         StringBuilder binRes = new StringBuilder("");
@@ -60,6 +89,11 @@ public class utils {
         return binRes.toString();
     }
 
+    /**
+     * Reverses a string.
+     * @param input The input String.
+     * @return The reverse of <i>input</i>.
+     */
     private static String reverse(String input) {
         char[] a = input.toCharArray();
         int l, r = 0;
@@ -74,6 +108,12 @@ public class utils {
         }
         return String.valueOf(a);
     }
+
+    /**
+     * converts an ArrayList of Strings to one String.
+     * @param arrayList The ArrayList input
+     * @return A string containing all the elements of the input.
+     */
     public static String concatArrayList(ArrayList<String> arrayList){
         StringBuilder sb = new StringBuilder();
         for(String st: arrayList){
@@ -82,6 +122,12 @@ public class utils {
 
         return sb.toString();
     }
+
+    /**
+     * converts a binary string back to string.
+     * @param binaryRep The binary string
+     * @return The original string.
+     */
     public static String binaryToText(String binaryRep){
         StringBuilder sb = new StringBuilder();
         int n = binaryRep.length();
@@ -93,6 +139,12 @@ public class utils {
         }
         return sb.toString();
     }
+
+    /**
+     * converts a binary string back to a byte array
+     * @param binaryRep The binary string
+     * @return The original byte array.
+     */
     public static byte[] binaryToByteArray(String binaryRep){
         int n = binaryRep.length();
         ByteBuffer bytes = ByteBuffer.allocate(n/8);
