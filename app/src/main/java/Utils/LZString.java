@@ -6,6 +6,11 @@ public class LZString {
     private static String keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
 
+    /**
+     * Compresses the given string to make it smaller in size.
+     * @param uncompressed The String to be compressed.
+     * @return The compressed string.
+     */
     public static String compress(String uncompressed) {
 
         if (uncompressed == null)
@@ -230,6 +235,11 @@ public class LZString {
         return context_data_string;
     }
 
+    /**
+     * Decompresses the given compressed string.
+     * @param compressed The compressed string
+     * @return The Decompressed String.
+     */
     public static String decompress(String compressed) {
 
         if (compressed == null)
@@ -423,6 +433,10 @@ public class LZString {
     }
 
 }
+
+/**
+ * A helper class for the compression process
+ */
 class Data {
     public int val;
     public String string;

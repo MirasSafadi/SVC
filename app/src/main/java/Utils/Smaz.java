@@ -85,8 +85,8 @@ public class Smaz {
     /**
      * Returns compressed byte array for the specified string
      *
-     * @param inString
-     * @return byte array
+     * @param inString The string to be compressed.
+     * @return byte array representing the compression result.
      */
     public byte[] compress(String inString) {
         confirmOnlyAscii(inString);
@@ -211,7 +211,7 @@ public class Smaz {
     /**
      * Decompress byte array from compress back into String
      *
-     * @param strBytes
+     * @param strBytes The byte array representing the compression result
      * @return decompressed String
      * @see Smaz#compress(String)
      */

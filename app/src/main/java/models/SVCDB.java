@@ -11,43 +11,52 @@ import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
+/**
+ * This is the helper class of the SQLite DB.<br/>
+ * It contains CRUD operations on the DB tables, and everything related to the DB.
+ */
+@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class SVCDB extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 2;
-    public static final String DATABASE_NAME = "SVCDB.db";
+    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "SVCDB.db";
     //Constants for the User table
-    public static final String USER_TABLE_NAME = "user";
-    public static final String USER_COLUMN_EMAIL = "email";
-    public static final String USER_COLUMN_FULL_NAME = "full_name";
-    public static final String USER_COLUMN_PASSWORD = "password";
+    private static final String USER_TABLE_NAME = "user";
+    private static final String USER_COLUMN_EMAIL = "email"; //this is the PK
+    private static final String USER_COLUMN_FULL_NAME = "full_name";
+    private static final String USER_COLUMN_PASSWORD = "password";
 
     //Constants for the VisitCard table
-    public static final String VC_TABLE_NAME = "visit_card";
-    public static final String VC_COLUMN_ID = "id";
-    public static final String VC_COLUMN_OWNER = "owner";
-    public static final String VC_COLUMN_EMAIL = "email";
-    public static final String VC_COLUMN_PREFIX = "prefix";
-    public static final String VC_COLUMN_FIRST_NAME = "first_name";
-    public static final String VC_COLUMN_MIDDLE_NAME = "middle_name";
-    public static final String VC_COLUMN_LAST_NAME = "last_name";
-    public static final String VC_COLUMN_POSITION_TITLE = "position_title";
-    public static final String VC_COLUMN_COMPANY = "company";
-    public static final String VC_COLUMN_ADDRESS = "address";
-    public static final String VC_COLUMN_TELEPHONE = "telephone";
-    public static final String VC_COLUMN_FAX = "fax";
-    public static final String VC_COLUMN_MOBILE = "mobile";
-    public static final String VC_COLUMN_WEBSITE = "website";
+    private static final String VC_TABLE_NAME = "visit_card";
+    private static final String VC_COLUMN_ID = "id"; //this is the PK
+    private static final String VC_COLUMN_OWNER = "owner";
+    private static final String VC_COLUMN_EMAIL = "email";
+    private static final String VC_COLUMN_PREFIX = "prefix";
+    private static final String VC_COLUMN_FIRST_NAME = "first_name";
+    private static final String VC_COLUMN_MIDDLE_NAME = "middle_name";
+    private static final String VC_COLUMN_LAST_NAME = "last_name";
+    private static final String VC_COLUMN_POSITION_TITLE = "position_title";
+    private static final String VC_COLUMN_COMPANY = "company";
+    private static final String VC_COLUMN_ADDRESS = "address";
+    private static final String VC_COLUMN_TELEPHONE = "telephone";
+    private static final String VC_COLUMN_FAX = "fax";
+    private static final String VC_COLUMN_MOBILE = "mobile";
+    private static final String VC_COLUMN_WEBSITE = "website";
 
 
-
-
-
+    /**
+     *
+     * @param context the context of the activity calling the DB.
+     */
     public SVCDB(Context context){
         super(context, DATABASE_NAME , null, 1);
     }
 
 
-
+    /**
+     * {@inheritDoc}
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -78,6 +87,12 @@ public class SVCDB extends SQLiteOpenHelper {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
@@ -86,8 +101,16 @@ public class SVCDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //===============================================================================================================================================
+
+
     //user related methods
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
+    /**
+     * gets a user from the DB corresponding to the given email (PK)
+     * @param email The email of the user to fetch
+     * @return The user object retrieved (null if not found)
+     */
     public UserDTO getUser(String email){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM user WHERE email = ?";
@@ -104,7 +127,12 @@ public class SVCDB extends SQLiteOpenHelper {
         }
         return null;
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
+    /**
+     * Adds a user to the DB.
+     * @param user The user object containing the data to be added.
+     * @return success/failure of the operation.
+     */
     public boolean addUser(UserDTO user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -115,13 +143,22 @@ public class SVCDB extends SQLiteOpenHelper {
         long insert_result = db.insert(USER_TABLE_NAME, null, contentValues);
         return insert_result != -1;
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
+    /**
+     * removes a user from the DB
+     * @param email The email of the user to remove.
+     * @return success/failure of the operation.
+     */
     public boolean removeUser(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(USER_TABLE_NAME, "email = ? ", new String[] { email}) == 1;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    /**
+     * Changes the password of a given user.
+     * @param user The user object containing the relevant information.
+     * @return success/failure of the operation.
+     */
     public boolean editPassword(UserDTO user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -132,8 +169,15 @@ public class SVCDB extends SQLiteOpenHelper {
         return update_result != -1;
     }
 
+    //===============================================================================================================================================
+
     //Visit card related methods
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
+    /**
+     * Gets a visit card  from the database corresponding to the passed ID (PK).
+     * @param id The id of the visit card to be fetched.
+     * @return A visit card object containing all the data (null if not found)
+     */
     public VisitCardDTO getVC(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM visit_card WHERE id = ?";
@@ -174,7 +218,11 @@ public class SVCDB extends SQLiteOpenHelper {
         return null;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    /**
+     * Adds a visit card to the DB.
+     * @param vc The visit card object containing the data to add.
+     * @return success/failure of the operation.
+     */
     public boolean addVC(VisitCardDTO vc){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -198,7 +246,11 @@ public class SVCDB extends SQLiteOpenHelper {
         return insert_result != -1;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    /**
+     * Updates one or more of the fields of the given visit card.
+     * @param vc The visit card object containing the data to change.
+     * @return success/failure of the operation.
+     */
     public boolean editVC(VisitCardDTO vc){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -220,7 +272,18 @@ public class SVCDB extends SQLiteOpenHelper {
         return update_result != -1;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    /**
+     * deletes a visit card.
+     * @param email The email field of the visit card to delete.
+     * @param first_name The first_name field of the visit card to delete.
+     * @param last_name The last_name field of the visit card to delete.
+     * @return success/failure of the operation.
+     */
+    /*
+     * deletes a visit card.
+     * @param id The id of the visit card to delete
+     * @return success/failure of the operation.
+     */
     public boolean deleteVC(String email, String first_name, String last_name){
         SQLiteDatabase db = this.getWritableDatabase();
         long delete_result= db.delete(VC_TABLE_NAME,
@@ -230,7 +293,11 @@ public class SVCDB extends SQLiteOpenHelper {
     }
 
 
-
+    /**
+     * Gets a list of all the visit cards owned by the given user.
+     * @param userEmail The email of the user owning the visit cards.
+     * @return The visit cards owned by the user (empty list if user owns none).
+     */
     public ArrayList<VisitCardDTO> getUserVisitCards(String userEmail){
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM visit_card WHERE owner = ?";
@@ -276,80 +343,5 @@ public class SVCDB extends SQLiteOpenHelper {
         }
         return visitCards;
 
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public boolean insertContact (String name, String phone, String email, String street,String place) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("name", name);
-//        contentValues.put("phone", phone);
-//        contentValues.put("email", email);
-//        contentValues.put("street", street);
-//        contentValues.put("place", place);
-//        db.insert("contacts", null, contentValues);
-        return true;
-    }
-
-    public Cursor getData(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor res =  db.rawQuery( "select * from contacts where id="+id+"", null );
-//        return res;
-        return null;
-    }
-
-    public int numberOfRows(){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        int numRows = (int) DatabaseUtils.queryNumEntries(db, CONTACTS_TABLE_NAME);
-//        return numRows;
-        return 0;
-    }
-
-    public boolean updateContact (Integer id, String name, String phone, String email, String street,String place) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("name", name);
-//        contentValues.put("phone", phone);
-//        contentValues.put("email", email);
-//        contentValues.put("street", street);
-//        contentValues.put("place", place);
-//        db.update("contacts", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
-        return true;
-    }
-
-    public Integer deleteContact (Integer id) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        return db.delete("contacts",
-//                "id = ? ",
-//                new String[] { Integer.toString(id) });
-        return null;
-    }
-
-    public ArrayList<String> getAllCotacts() {
-//        ArrayList<String> array_list = new ArrayList<String>();
-//
-//        //hp = new HashMap();
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor res =  db.rawQuery( "select * from contacts", null );
-//        res.moveToFirst();
-//
-//        while(res.isAfterLast() == false){
-//            array_list.add(res.getString(res.getColumnIndex(CONTACTS_COLUMN_NAME)));
-//            res.moveToNext();
-//        }
-//        return array_list;
-        return null;
     }
 }
