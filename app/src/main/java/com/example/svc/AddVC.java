@@ -246,9 +246,13 @@ public class AddVC extends AppCompatActivity {
 //            String decompressed = Utils.LZString.decompress(compressed);
             //do whatever...
             //fill in the text fields...
-            new AlertDialog.Builder(this).setTitle("Received String").setMessage(decompressed).setNeutralButton("OK",null).show();
+            //new AlertDialog.Builder(this).setTitle("Received String").setMessage(decompressed).setNeutralButton("OK",null).show();
             VisitCardDTO receivedVC = VisitCardDTO.receiveVisitCard(decompressed);
             //TODO Rani: do the same for the 4 name TF's after you add them..
+            ((EditText) findViewById(R.id.prenameTF)).setText(receivedVC.getMobile());
+            ((EditText) findViewById(R.id.fnameTF)).setText(receivedVC.getMobile());
+            ((EditText) findViewById(R.id.mnameTF)).setText(receivedVC.getMobile());
+            ((EditText) findViewById(R.id.lnameTF)).setText(receivedVC.getMobile());
             ((EditText) findViewById(R.id.mobileTF)).setText(receivedVC.getMobile());
             ((EditText) findViewById(R.id.companyTF)).setText(receivedVC.getCompany());
             ((EditText) findViewById(R.id.telephoneTF)).setText(receivedVC.getTelephone());
@@ -257,6 +261,7 @@ public class AddVC extends AppCompatActivity {
             ((EditText) findViewById(R.id.positionTF)).setText(receivedVC.getPosition_title());
             ((EditText) findViewById(R.id.websiteTF)).setText(receivedVC.getWebsite());
             ((EditText) findViewById(R.id.addressTF)).setText(receivedVC.getAddress());
+
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

@@ -85,7 +85,7 @@ public class ViewVisitCard extends AppCompatActivity {
      */
     public void Delete(View v){
         //TODO: delete from phone book (if possible)
-        if(VisitCardDAO.deleteVC( vc.getEmail(),vc.getFirst_name(),vc.getLast_name(),db)){
+        if(VisitCardDAO.deleteVC( vc.getId(),db)){
             Intent intent = new Intent(this,Home.class);
             //putExtra
             intent.putExtra(Constants.USER,user.toString());

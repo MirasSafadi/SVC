@@ -205,7 +205,7 @@ public class EditVC extends AppCompatActivity {
                     .setWebsite(website)
                     .build();
             if(VisitCardDAO.editVC(editedVC, db)){
-
+                System.out.println(vc.getPosition_title());
                 //TODO: update contact in phone book
 
                 Intent intent = new Intent(this,Home.class);

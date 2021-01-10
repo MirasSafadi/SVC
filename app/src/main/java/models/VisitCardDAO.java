@@ -32,6 +32,9 @@ public class VisitCardDAO {
         //do input validation!!
         //get the vc from the database
         System.out.println(vc.getPosition_title());
+        boolean is_exist = db.getVC(vc.getEmail(),vc.getFirst_name(),vc.getLast_name());
+        if(is_exist)
+            return false;
         return db.addVC(vc);
     }
 
@@ -44,19 +47,17 @@ public class VisitCardDAO {
     public static boolean editVC (VisitCardDTO vc, SVCDB db){
         //do input validation!!
         //get the vc from the database
-
+        System.out.println(vc.getPrefix());
         return db.editVC(vc);
     }
 
     /**
      * Deletes a visit card from the DB.
-     * @param email The email field of the visit card to delete
-     * @param first_name The first_name field of the visit card to delete.
-     * @param last_name The last_name field of the visit card to delete.
+     * @param id The id of the visit card to delete
      * @param db The DB instance.
      * @return success/failure of the operation
      */
-    public static boolean deleteVC (String email, String first_name, String last_name, SVCDB db){
-        return db.deleteVC(email,first_name,last_name);
+    public static boolean deleteVC (int id, SVCDB db){
+        return db.deleteVC(id);
     }
 }
