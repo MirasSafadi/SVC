@@ -187,7 +187,7 @@ public class AddVC extends AppCompatActivity {
                //add a condition in the DB that checks if a visit card for this user with THE SAME VALUES FOR ALL FIELDS
                 new AlertDialog.Builder(this)
                         .setTitle("You already have this visit card!")
-                        .setMessage("Please add another visit card with another ID!")
+                        .setMessage("This visit card already exists")
                         .setNeutralButton("Close", null)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();

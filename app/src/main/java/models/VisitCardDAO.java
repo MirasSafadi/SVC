@@ -1,5 +1,6 @@
 package models;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -19,7 +20,12 @@ public class VisitCardDAO {
      * @return A list of visit cards (empty if user owns none).
      */
     public static ArrayList<VisitCardDTO> getUserVisitCards(String email,SVCDB db){
-        return db.getUserVisitCards(email);
+        try{
+            return db.getUserVisitCards(email);
+        } catch (SQLiteConstraintException e){
+            return null;
+        }
+
     }
 
     /**
@@ -31,11 +37,16 @@ public class VisitCardDAO {
     public static boolean addVC (VisitCardDTO vc, SVCDB db){
         //do input validation!!
         //get the vc from the database
-        System.out.println(vc.getPosition_title());
-        boolean is_exist = db.getVC(vc.getEmail(),vc.getFirst_name(),vc.getLast_name());
-        if(is_exist)
+
+        try{
+            System.out.println(vc.getPosition_title());
+            boolean is_exist = db.VCexists(vc.getEmail(),vc.getFirst_name(),vc.getLast_name());
+            if(is_exist)
+                return false;
+            return db.addVC(vc);
+        } catch (SQLiteConstraintException e){
             return false;
-        return db.addVC(vc);
+        }
     }
 
     /**
@@ -47,8 +58,11 @@ public class VisitCardDAO {
     public static boolean editVC (VisitCardDTO vc, SVCDB db){
         //do input validation!!
         //get the vc from the database
-        System.out.println(vc.getPrefix());
-        return db.editVC(vc);
+        try{
+            return db.editVC(vc);
+        } catch (SQLiteConstraintException e){
+            return false;
+        }
     }
 
     /**
@@ -58,6 +72,11 @@ public class VisitCardDAO {
      * @return success/failure of the operation
      */
     public static boolean deleteVC (int id, SVCDB db){
-        return db.deleteVC(id);
+        try{
+            return db.deleteVC(id);
+        } catch (SQLiteConstraintException e){
+            return false;
+        }
+
     }
 }
