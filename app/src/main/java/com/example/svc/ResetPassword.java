@@ -76,7 +76,7 @@ public class ResetPassword extends AppCompatActivity {
         if(!InputValidators.validate(InputValidators.PASSWORD,password1)){
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
-                    .setMessage("One or more of the fields is invalid")
+                    .setMessage("Password must be at least 8 characters long and contain at least 1 digit, 1 small case letter, and 1 upper case letter.")
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -94,5 +94,13 @@ public class ResetPassword extends AppCompatActivity {
             startActivity(intent);
         }
         //TODO: display alert in case of error.
+        else{
+            new AlertDialog.Builder(this)
+                    .setTitle("This password wasn't updated.")
+                    .setMessage("Please try again!")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 }
