@@ -3,6 +3,7 @@ package models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
@@ -67,11 +68,11 @@ public class SVCDB extends SQLiteOpenHelper {
                 "CREATE TABLE `visit_card` (" +
                         "  `id` INTEGER  PRIMARY KEY AUTOINCREMENT, " +
                         "  `owner` VARCHAR(255), " +
-                        "  `email` VARCHAR(255) UNIQUE, " +
+                        "  `email` VARCHAR(255), " +
                         "  `prefix` VARCHAR(255), " +
-                        "  `first_name` VARCHAR(255) UNIQUE, " +
+                        "  `first_name` VARCHAR(255), " +
                         "  `middle_name` VARCHAR(255), " +
-                        "  `last_name` VARCHAR(255) UNIQUE, " +
+                        "  `last_name` VARCHAR(255), " +
                         "  `position_title` VARCHAR(255) , " +
                         "  `company` VARCHAR(255), " +
                         "  `address` VARCHAR(255), " +
@@ -79,6 +80,7 @@ public class SVCDB extends SQLiteOpenHelper {
                         "  `fax` VARCHAR(15), " +
                         "  `mobile` VARCHAR(15), " +
                         "  `website` VARCHAR(255), " +
+                        "  UNIQUE(`email`,`first_name`,`last_name`), " +
                         "  CONSTRAINT `owner` " +
                         "    FOREIGN KEY (`owner`) " +
                         "    REFERENCES `user` (`email`) " +
@@ -111,7 +113,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param email The email of the user to fetch
      * @return The user object retrieved (null if not found)
      */
-    public UserDTO getUser(String email){
+    public UserDTO getUser(String email) throws SQLiteConstraintException{
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM user WHERE email = ?";
         Cursor cursor = db.rawQuery(sql, new String[] {email});
@@ -133,7 +135,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param user The user object containing the data to be added.
      * @return success/failure of the operation.
      */
-    public boolean addUser(UserDTO user){
+    public boolean addUser(UserDTO user) throws SQLiteConstraintException{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COLUMN_EMAIL, user.getEmail());
@@ -149,7 +151,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param email The email of the user to remove.
      * @return success/failure of the operation.
      */
-    public boolean removeUser(String email){
+    public boolean removeUser(String email) throws SQLiteConstraintException{
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(USER_TABLE_NAME, "email = ? ", new String[] { email}) == 1;
     }
@@ -159,7 +161,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param user The user object containing the relevant information.
      * @return success/failure of the operation.
      */
-    public boolean editPassword(UserDTO user){
+    public boolean editPassword(UserDTO user) throws SQLiteConstraintException{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COLUMN_PASSWORD, user.getPassword());
@@ -172,38 +174,46 @@ public class SVCDB extends SQLiteOpenHelper {
     //===============================================================================================================================================
 
     //Visit card related methods
-/** int vc_id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
- String owner = cursor.getString(cursor.getColumnIndex(VC_COLUMN_OWNER));
- String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
- String prefix = cursor.getString(cursor.getColumnIndex(VC_COLUMN_PREFIX));
- String first_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FIRST_NAME));
- String middle_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MIDDLE_NAME));
- String last_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_LAST_NAME));
- String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));
- String company = cursor.getString(cursor.getColumnIndex(VC_COLUMN_COMPANY));
- String address = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ADDRESS));
- String telephone = cursor.getString(cursor.getColumnIndex(VC_COLUMN_TELEPHONE));
- String fax = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FAX));
- String mobile = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MOBILE));
- String website = cursor.getString(cursor.getColumnIndex(VC_COLUMN_WEBSITE));
 
- return new VisitCardDTO.Builder().
- setId(vc_id).
- setOwner(owner).
- setEmail(email).
- setPrefix(prefix).
- setFirst_name(first_name).
- setMiddle_name(middle_name).
- setLast_name(last_name).
- setPosition_title(position_title).
- setCompany(company).
- setAddress(address).
- setTelephone(telephone).
- setFax(fax).
- setMobile(mobile).
- setWebsite(website).
- build();
- */
+    public VisitCardDTO getVC(int id) throws SQLiteConstraintException{
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM visit_card WHERE id = ?";
+        Cursor cursor = db.rawQuery(sql, new String[] { Integer.toString(id) });
+        if(cursor.moveToFirst()){
+            int vc_id = cursor.getInt(cursor.getColumnIndex(VC_COLUMN_ID));
+            String owner = cursor.getString(cursor.getColumnIndex(VC_COLUMN_OWNER));
+            String email = cursor.getString(cursor.getColumnIndex(VC_COLUMN_EMAIL));
+            String prefix = cursor.getString(cursor.getColumnIndex(VC_COLUMN_PREFIX));
+            String first_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FIRST_NAME));
+            String middle_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MIDDLE_NAME));
+            String last_name = cursor.getString(cursor.getColumnIndex(VC_COLUMN_LAST_NAME));
+            String position_title = cursor.getString(cursor.getColumnIndex(VC_COLUMN_POSITION_TITLE));
+            String company = cursor.getString(cursor.getColumnIndex(VC_COLUMN_COMPANY));
+            String address = cursor.getString(cursor.getColumnIndex(VC_COLUMN_ADDRESS));
+            String telephone = cursor.getString(cursor.getColumnIndex(VC_COLUMN_TELEPHONE));
+            String fax = cursor.getString(cursor.getColumnIndex(VC_COLUMN_FAX));
+            String mobile = cursor.getString(cursor.getColumnIndex(VC_COLUMN_MOBILE));
+            String website = cursor.getString(cursor.getColumnIndex(VC_COLUMN_WEBSITE));
+
+            return new VisitCardDTO.Builder().
+                    setId(vc_id).
+                    setOwner(owner).
+                    setEmail(email).
+                    setPrefix(prefix).
+                    setFirst_name(first_name).
+                    setMiddle_name(middle_name).
+                    setLast_name(last_name).
+                    setPosition_title(position_title).
+                    setCompany(company).
+                    setAddress(address).
+                    setTelephone(telephone).
+                    setFax(fax).
+                    setMobile(mobile).
+                    setWebsite(website).
+                    build();
+        }
+        return null;
+    }
     /**
      * Gets a visit card  from the database corresponding to the passed ID (PK).
      * @param email The email field of the visit card to be fetched.
@@ -211,12 +221,15 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param last_name The last name field of the visit card to be fetched.
      * @return A visit card object containing all the data (null if not found)
      */
-    public boolean getVC(String email, String first_name, String last_name){
+    public boolean VCexists(String email, String first_name, String last_name) throws SQLiteConstraintException{
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM visit_card WHERE email = ? AND first_name = ? AND last_name = ? ";
         Cursor cursor = db.rawQuery(sql, new String[] { email,first_name,last_name });
+
         if(cursor.moveToFirst()){
-           return true;
+            String prefix = cursor.getString(cursor.getColumnIndex(VC_COLUMN_PREFIX));
+            System.out.println(prefix);
+            return true;
         }
        return false;
     }
@@ -226,7 +239,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param vc The visit card object containing the data to add.
      * @return success/failure of the operation.
      */
-    public boolean addVC(VisitCardDTO vc){
+    public boolean addVC(VisitCardDTO vc) throws SQLiteConstraintException{
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -243,9 +256,7 @@ public class SVCDB extends SQLiteOpenHelper {
         contentValues.put(VC_COLUMN_FAX, vc.getFax());
         contentValues.put(VC_COLUMN_MOBILE, vc.getMobile());
         contentValues.put(VC_COLUMN_WEBSITE, vc.getWebsite());
-        System.out.println(vc.getPosition_title());
         long insert_result = db.insert(VC_TABLE_NAME, null, contentValues);
-        System.out.println("result"+ insert_result);
         return insert_result != -1;
     }
 
@@ -254,7 +265,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param vc The visit card object containing the data to change.
      * @return success/failure of the operation.
      */
-    public boolean editVC(VisitCardDTO vc){
+    public boolean editVC(VisitCardDTO vc) throws SQLiteConstraintException {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(VC_COLUMN_OWNER, vc.getOwner());
@@ -271,7 +282,8 @@ public class SVCDB extends SQLiteOpenHelper {
         contentValues.put(VC_COLUMN_MOBILE, vc.getMobile());
         contentValues.put(VC_COLUMN_WEBSITE, vc.getWebsite());
 
-        long update_result= db.update(VC_TABLE_NAME, contentValues,"owner = ? ", new String[] {vc.getOwner()});
+        long update_result= db.update(VC_TABLE_NAME, contentValues,"id = ?", new String[] { Integer.toString(vc.getId()) });
+        System.out.println("HI " + update_result);
         return update_result != -1;
     }
 
@@ -285,7 +297,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param id The id of the visit card to delete
      * @return success/failure of the operation.
      */
-    public boolean deleteVC(int id){
+    public boolean deleteVC(int id) throws SQLiteConstraintException{
         SQLiteDatabase db = this.getWritableDatabase();
         long delete_result= db.delete(VC_TABLE_NAME,"id = ? ", new String[] {Integer.toString(id)});
         return delete_result != -1;
@@ -297,7 +309,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param userEmail The email of the user owning the visit cards.
      * @return The visit cards owned by the user (empty list if user owns none).
      */
-    public ArrayList<VisitCardDTO> getUserVisitCards(String userEmail){
+    public ArrayList<VisitCardDTO> getUserVisitCards(String userEmail) throws SQLiteConstraintException{
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM visit_card WHERE owner = ?";
         Cursor cursor = db.rawQuery(sql, new String[] { userEmail });

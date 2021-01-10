@@ -1,5 +1,6 @@
 package com.example.svc;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -54,7 +55,15 @@ public class Home extends AppCompatActivity {
         user = UserDTO.stringToUser(intent.getStringExtra(Constants.USER));
         //get the visit cards owned by this user.
         userVisitCards = VisitCardDAO.getUserVisitCards(user.getEmail(),db);
-
+        if(userVisitCards == null){
+            new AlertDialog.Builder(this)
+                    .setTitle("An Error!")
+                    .setMessage("An Error Occurred, please try again.")
+                    .setNeutralButton("Close", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.welcomeTV);
         textView.setText("Welcome, " + user.getFull_name());

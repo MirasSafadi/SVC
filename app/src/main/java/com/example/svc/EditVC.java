@@ -190,6 +190,7 @@ public class EditVC extends AppCompatActivity {
         //try to save the changes and display an alert should an error occur.
         try {
             VisitCardDTO editedVC = new VisitCardDTO.Builder()
+                    .setId(vc.getId())
                     .setEmail(email)
                     .setOwner(vc.getOwner())
                     .setPrefix(prefix)
@@ -205,7 +206,6 @@ public class EditVC extends AppCompatActivity {
                     .setWebsite(website)
                     .build();
             if(VisitCardDAO.editVC(editedVC, db)){
-                System.out.println(vc.getPosition_title());
                 //TODO: update contact in phone book
 
                 Intent intent = new Intent(this,Home.class);
@@ -220,6 +220,7 @@ public class EditVC extends AppCompatActivity {
                         .setNeutralButton("Close", null)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
+                return;
             }
         } catch (IllegalArgumentException e) {
             new AlertDialog.Builder(this)
