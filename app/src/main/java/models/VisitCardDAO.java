@@ -1,6 +1,6 @@
 package models;
 
-import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteException;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -22,7 +22,7 @@ public class VisitCardDAO {
     public static ArrayList<VisitCardDTO> getUserVisitCards(String email,SVCDB db){
         try{
             return db.getUserVisitCards(email);
-        } catch (SQLiteConstraintException e){
+        } catch (SQLiteException e){
             return null;
         }
 
@@ -44,7 +44,7 @@ public class VisitCardDAO {
             if(is_exist)
                 return false;
             return db.addVC(vc);
-        } catch (SQLiteConstraintException e){
+        } catch (SQLiteException e){
             return false;
         }
     }
@@ -60,7 +60,7 @@ public class VisitCardDAO {
         //get the vc from the database
         try{
             return db.editVC(vc);
-        } catch (SQLiteConstraintException e){
+        } catch (SQLiteException e){
             return false;
         }
     }
@@ -74,7 +74,7 @@ public class VisitCardDAO {
     public static boolean deleteVC (int id, SVCDB db){
         try{
             return db.deleteVC(id);
-        } catch (SQLiteConstraintException e){
+        } catch (SQLiteException e){
             return false;
         }
 
