@@ -142,7 +142,7 @@ public class Receiver implements CallBack{
         }
 
         // find largest peak in power spectrum
-        double max_magnitude = magnitude[0];
+        double max_magnitude = -100;
         int max_index = 0;
         for (int i = 0; i < magnitude.length; ++i) {
             double frequency = SampleRate * i / NumberOfFFTPoints;

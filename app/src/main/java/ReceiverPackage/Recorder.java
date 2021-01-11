@@ -63,9 +63,9 @@ public class Recorder {
                 int minBufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioEncoding);
                 int optimalBufSize = 12000;
 
-                if(optimalBufSize < minBufferSize){
+                //if(optimalBufSize < minBufferSize){
                     optimalBufSize = minBufferSize;
-                }
+                //}
                 callback.setBufferSize(optimalBufSize);
                 AudioRecord recorder = new AudioRecord(audioSource, sampleRate, channelConfig, audioEncoding, optimalBufSize);
                 if (recorder.getState() == AudioRecord.STATE_UNINITIALIZED) {
