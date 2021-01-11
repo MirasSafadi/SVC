@@ -113,7 +113,7 @@ public class SVCDB extends SQLiteOpenHelper {
      * @param email The email of the user to fetch
      * @return The user object retrieved (null if not found)
      */
-    public UserDTO getUser(String email) throws SQLiteConstraintException{
+    public UserDTO getUser(String email) throws SQLiteException{
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM user WHERE email = ?";
         Cursor cursor = db.rawQuery(sql, new String[] {email});
