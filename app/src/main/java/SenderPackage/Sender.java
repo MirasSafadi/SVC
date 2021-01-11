@@ -64,7 +64,7 @@ public class Sender {
 //         start playing msg
         for (int freq : MsgFrequencies) {
             Log.d("sending = ", String.valueOf(freq));
-            this.PlayTone((double) freq, 0.136);
+            this.PlayTone((double) freq, 0.04);
         }
 
         // end handshake TODO taimor: check how many times do we really need
