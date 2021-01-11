@@ -23,6 +23,11 @@ public class InputValidators {
      */
     public static final String NAME = "NAME";
     /**
+     * Public Constant:
+     *  FULL_NAME - used to indicate that the type of the input is <i>full_name</i>.
+     */
+    public static final String FULL_NAME = "FULL_NAME";
+    /**
      * Public Constants:
      *  PASSWORD - used to indicate that the type of the input is <i>password</i>.
      */
@@ -54,6 +59,7 @@ public class InputValidators {
      */
     //for user model
     private static final Pattern nameRegex = Pattern.compile("^[a-z]+[^0-9]$",Pattern.CASE_INSENSITIVE); // name must contain only english characters
+    private static final Pattern full_nameRegex = Pattern.compile("^[a-z ]+[^0-9]$",Pattern.CASE_INSENSITIVE); // name must contain only english characters and space
     private static final Pattern passwordRegex = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$"); // Password must be at least 8 characters long and contain at least 1 digit, 1 small case letter, and 1 upper case letter.
     private static final Pattern emailRegex = Pattern.compile("^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])$",Pattern.CASE_INSENSITIVE);//works
     //email is invalid
@@ -77,6 +83,9 @@ public class InputValidators {
             return matcher.find();
         } else if(type == NAME){
             matcher = nameRegex.matcher(value);
+            return matcher.find();
+        } else if(type == FULL_NAME){
+            matcher = full_nameRegex.matcher(value);
             return matcher.find();
         } else if(type == PASSWORD){
             matcher = passwordRegex.matcher(value);

@@ -355,7 +355,7 @@ public class VisitCardDTO {
     public static VisitCardDTO stringToVisitCard(String enc){
         String[] info = enc.split(";");
         //fill empty fields in the end with empty strings
-        info = utils.fillArray(info);
+        info = utils.fillArray(info,14);
         return new Builder().
                             setId(Integer.parseInt(info[0])).
                             setOwner(info[1]).
@@ -382,20 +382,20 @@ public class VisitCardDTO {
     public static VisitCardDTO receiveVisitCard(String enc){
         String[] info = enc.split(";");
         //fill empty fields in the end with empty strings
-        info = utils.fillArray(info);
+        info = utils.fillArray(info,12);
         return new Builder().
-                setEmail(info[2]).
-                setPrefix(info[3]).
-                setFirst_name(info[4]).
-                setMiddle_name(info[5]).
-                setLast_name(info[6]).
-                setPosition_title(info[7]).
-                setCompany(info[8]).
-                setAddress(info[9]).
-                setTelephone(info[10]).
-                setFax(info[11]).
-                setMobile(info[12]).
-                setWebsite(info[13]).
+                setEmail(info[0]).
+                setPrefix(info[1]).
+                setFirst_name(info[2]).
+                setMiddle_name(info[3]).
+                setLast_name(info[4]).
+                setPosition_title(info[5]).
+                setCompany(info[6]).
+                setAddress(info[7]).
+                setTelephone(info[8]).
+                setFax(info[9]).
+                setMobile(info[10]).
+                setWebsite(info[11]).
                 build();
     }
 }

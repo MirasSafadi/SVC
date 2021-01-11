@@ -32,12 +32,12 @@ public class utils {
      * @param arr The array to fill
      * @return A new array of size 14 with trailing empty strings
      */
-    public static String[] fillArray(String arr[]) {
-        String newArr[] = new String[14];
+    public static String[] fillArray(String arr[],int length) {
+        String newArr[] = new String[length];
         int i = 0;
         for (; i < arr.length; i++)
             newArr[i] = arr[i];
-        for(;i<14;i++)
+        for(;i<length;i++)
             newArr[i] = "";
 
         return newArr;
