@@ -79,7 +79,7 @@ public class SignUp extends AppCompatActivity {
                     .show();
             return;
         }
-        if(!InputValidators.validate(InputValidators.NAME,full_name)) {
+        if(!InputValidators.validate(InputValidators.FULL_NAME,full_name)) {
             new AlertDialog.Builder(this)
                     .setTitle("Invalid input")
                     .setMessage("Name must contain only english characters")
@@ -114,7 +114,6 @@ public class SignUp extends AppCompatActivity {
                     .setNeutralButton("Close", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-
         }
     }
 }
