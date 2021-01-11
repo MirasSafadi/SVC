@@ -1,5 +1,6 @@
 package models;
 
+import android.database.sqlite.SQLiteException;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -19,16 +20,20 @@ public class UserDAO {
      * @return All the user data fetched from the DB, null if wrong credentials.
      */
     public static UserDTO login(UserDTO user,SVCDB db){
-        //do input validation!!
-        //get the user from the database
-        UserDTO dbUser = db.getUser(user.getEmail());
-        //if the user doesn't exist in db return false
-        if(dbUser == null)
+        try{
+            //do input validation!!
+            //get the user from the database
+            UserDTO dbUser = db.getUser(user.getEmail());
+            //if the user doesn't exist in db return false
+            if (dbUser == null)
+                return null;
+            //check credentials and send response
+            if (Auth.checkPassword(dbUser.getPassword(), user.getPassword()))
+                return dbUser;
             return null;
-        //check credentials and send response
-        if(Auth.checkPassword(dbUser.getPassword(),user.getPassword()))
-            return dbUser;
-        return null;
+        } catch(SQLiteException e){
+            return null;
+        }
     }
 
     /**
@@ -38,8 +43,12 @@ public class UserDAO {
      * @return success/failure of the operation
      */
     public static boolean signUp(UserDTO user,SVCDB db){
-        //do input validation!!!
-        return db.addUser(user);
+        try{
+            //do input validation!!!
+            return db.addUser(user);
+        } catch(SQLiteException e){
+            return false;
+        }
     }
 
     /**
@@ -49,10 +58,13 @@ public class UserDAO {
      * @return success/failure of the operation
      */
     public static boolean resetPassword (UserDTO user, SVCDB db){
-        //do input validation!!
-        //get the vc from the database
-
-        return db.editPassword(user);
+        try{
+            //do input validation!!
+            //get the vc from the database
+            return db.editPassword(user);
+        } catch(SQLiteException e){
+            return false;
+        }
     }
 }
 
