@@ -266,7 +266,7 @@ public class AddVC extends AppCompatActivity {
         } catch (UnsupportedEncodingException | IllegalArgumentException | IndexOutOfBoundsException e) {
             e.printStackTrace();
             new AlertDialog.Builder(this)
-                    .setTitle("Received String")
+                    .setTitle("Uh Oh! Something went wrong...")
                     .setMessage("An error occurred, maybe mandatory fields are missing.")
                     .setNeutralButton("OK",null)
                     .show();
