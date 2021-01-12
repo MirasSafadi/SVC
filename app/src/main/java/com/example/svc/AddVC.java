@@ -263,7 +263,7 @@ public class AddVC extends AppCompatActivity {
             ((EditText) findViewById(R.id.addressTF)).setText(receivedVC.getAddress());
 
 
-        } catch (UnsupportedEncodingException | IllegalArgumentException e) {
+        } catch (UnsupportedEncodingException | IllegalArgumentException | IndexOutOfBoundsException e) {
             e.printStackTrace();
             new AlertDialog.Builder(this)
                     .setTitle("Received String")
