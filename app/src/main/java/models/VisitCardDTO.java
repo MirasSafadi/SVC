@@ -379,7 +379,7 @@ public class VisitCardDTO {
      * @param enc The string encoding received via sound
      * @return The VisitCardDTO object extracted from the received string.
      */
-    public static VisitCardDTO receiveVisitCard(String enc){
+    public static VisitCardDTO receiveVisitCard(String enc) throws IndexOutOfBoundsException,IllegalArgumentException{
         String[] info = enc.split(";");
         //fill empty fields in the end with empty strings
         info = utils.fillArray(info,12);
