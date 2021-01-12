@@ -263,8 +263,13 @@ public class AddVC extends AppCompatActivity {
             ((EditText) findViewById(R.id.addressTF)).setText(receivedVC.getAddress());
 
 
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | IllegalArgumentException e) {
             e.printStackTrace();
+            new AlertDialog.Builder(this)
+                    .setTitle("Received String")
+                    .setMessage("An error occurred, maybe mandatory fields are missing.")
+                    .setNeutralButton("OK",null)
+                    .show();
         }
     }
 
